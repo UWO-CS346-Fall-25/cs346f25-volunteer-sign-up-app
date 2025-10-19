@@ -134,13 +134,44 @@ main {
   font-size: 1.25rem;
 }
 
+/* Opportunity entries */
+.opportunities ol {
+  list-style-type: none;
+}
+
+.opportunities li {
+  padding: 1vw;
+}
+
+.opportunities table {
+  margin: auto;
+  width: 100%;
+  border: 1px solid var(--primary-color);
+}
+
+.opportunities td {
+  text-align: center;
+}
+
+.td-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.td-description, .td-organizers {
+  font-size: 1.05rem;
+}
+
+.td-date, .td-time, .td-zip {
+  font-size: 0.8rem;
+}
+
 /* Profile Page */
 .profile-data {
   padding: 5vw;
 }
 
 .profile-data table {
-  width: 20vw;
   padding: 2%;
   margin: auto;
   border: 1px solid var(--primary-color);
