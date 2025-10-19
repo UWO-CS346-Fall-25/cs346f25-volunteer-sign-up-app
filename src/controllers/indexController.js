@@ -61,4 +61,4 @@ exports.getProfile = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};

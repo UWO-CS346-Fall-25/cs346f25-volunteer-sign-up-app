@@ -166,11 +166,14 @@ button {
   font-size: 1.25rem;
 }
 
-.td-description, .td-organizers {
+.td-description,
+.td-organizers {
   font-size: 1.05rem;
 }
 
-.td-date, .td-time, .td-zip {
+.td-date,
+.td-time,
+.td-zip {
   font-size: 0.8rem;
 }
 

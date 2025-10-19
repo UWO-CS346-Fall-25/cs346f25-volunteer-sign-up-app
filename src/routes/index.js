@@ -26,5 +26,4 @@ router.get('/', indexController.getHome);
 router.get('/dashboard', indexController.getDashboard);
 router.get('/profile', indexController.getProfile);
 
-
 module.exports = router;
