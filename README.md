@@ -1,6 +1,8 @@
-# CS346 Semester Project Template
+# Volunteer Sign-up Website
 
-A teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL.
+This website aims to simplify the process of searching for local volunteer opportunities and signing up for them.
+
+Based on a teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL.
 
 ## Features
 
@@ -16,7 +18,7 @@ A teaching template for building secure web applications with Node.js, Express, 
 1. **Clone the repository**
    ```bash
    git clone <your-repository-url>
-   cd cs346-semester-project-template
+   cd cs346-volunteer-sign-up-app
    ```
 
 2. **Install dependencies**
@@ -129,11 +131,10 @@ Comprehensive documentation is available in the `docs/` folder:
 
 ## Contributing
 
-This is a teaching template. Feel free to:
+This is based on a teaching template. Feel free to:
 - Report issues
 - Suggest improvements
 - Submit pull requests
-- Use it for your own projects
 
 ## License
 
