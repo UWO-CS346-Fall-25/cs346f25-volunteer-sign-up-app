@@ -173,16 +173,17 @@ button {
   font-size: 0.8rem;
 }
 
-/* Home page */
-.find-bar {
+/* Filter bars */
+.filter-bar {
   justify-content: space-between;
   display: flex;
 }
 
-.find-bar p {
+.filter-bar p {
   font-size: 1.25rem;
   font-weight: bold;
   display: inline-flex;
+  text-decoration: underline;
 }
 
 /* Profile Page */
