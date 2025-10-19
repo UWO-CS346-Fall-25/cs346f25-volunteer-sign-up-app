@@ -18,7 +18,7 @@ Based on a teaching template for building secure web applications with Node.js, 
 1. **Clone the repository**
    ```bash
    git clone <your-repository-url>
-   cd cs346-volunteer-sign-up-app
+   cd cs346f25-volunteer-sign-up-app
    ```
 
 2. **Install dependencies**
