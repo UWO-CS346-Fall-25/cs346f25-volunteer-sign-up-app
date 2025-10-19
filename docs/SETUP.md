@@ -1,6 +1,6 @@
 # Setup Guide
 
-This guide will help you set up the CS346 project template on your local machine.
+This guide will help you set up the Volunteer Sign-up Website on your local machine.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ Before you begin, make sure you have the following installed:
 
 ```bash
 git clone <your-repository-url>
-cd cs346-semester-project-template
+cd cs346f25-volunteer-sign-up-app
 ```
 
 ### 2. Install Dependencies
