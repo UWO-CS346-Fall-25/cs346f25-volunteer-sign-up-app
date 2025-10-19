@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Volunteer Sign-up</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <a href="/" class="logo">Volunteer Sign-up</a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/profile">
+            <img id="header_pfp"
+              alt="Profile"
+              src="/img/default_pfp.svg"
+              width="30">
+          </a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="profile-data">
+      <table>
+        <tr>
+          <td rowspan="2">
+            <img alt="Profile Picture"
+              src="/img/default_pfp.svg">
+          </td>
+          <td colspan="3">FirstName LastName</td>
+          <td colspan="2"><button id="change-name">Change</button></td>
+        </tr>
+        <tr>
+          <td colspan="3">email@example.org</td>
+          <td colspan="2"><button id="change-email">Change</button></td>
+        </tr>
+        <tr>
+          <td><button id="change-pfp">Change Picture</button></td>
+          <td colspan="4">Account Created: 10/18/2025</td>
+        </tr>
+        <tr>
+          <td colspan="5"><button id="change-pwd">Change Password</button></td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td colspan="5"><button id="delete-account">Delete Account</button></td>
+        </tr>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Volunteer Sign-up. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

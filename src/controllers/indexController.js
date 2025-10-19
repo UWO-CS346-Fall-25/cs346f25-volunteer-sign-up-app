@@ -34,13 +34,13 @@ exports.getHome = async (req, res, next) => {
 };
 
 /**
- * GET /about
- * Display the about page
+ * GET /dashboard
+ * Display the user dashboard
  */
 exports.getAbout = async (req, res, next) => {
   try {
-    res.render('about', {
-      title: 'About',
+    res.render('dashboard', {
+      title: 'Dashboard',
       csrfToken: req.csrfToken(),
     });
   } catch (error) {
@@ -48,4 +48,17 @@ exports.getAbout = async (req, res, next) => {
   }
 };
 
-// Add more controller methods as needed
+/**
+ * GET /profile
+ * Display the user profile
+ */
+exports.getProfile = async (req, res, next) => {
+  try {
+    res.render('profile', {
+      title: 'Dashboard',
+      csrfToken: req.csrfToken(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};

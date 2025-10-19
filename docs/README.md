@@ -1,8 +1,10 @@
-# CS346 Project Template Documentation
+# Volunteer Sign-up Website Documentation
 
 ## Overview
 
-This is a teaching template for building web applications with:
+This website aims to simplify the process of searching for local volunteer opportunities and signing up for them.
+
+This is based on a teaching template for building web applications with:
 - **Node.js 20**: JavaScript runtime
 - **Express 4**: Web application framework
 - **EJS**: Templating engine
@@ -34,11 +36,16 @@ This is a teaching template for building web applications with:
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
 │   │   ├── index.ejs       # Home page
+│   │   ├── dashboard.ejs   # Dashboard page
+│   │   ├── profile.ejs   # Profile page
 │   │   ├── error.ejs       # Error page
 │   │   └── layout.ejs      # Layout template (optional)
 │   └── public/             # Static files
 │       ├── css/
 │       │   └── style.css   # Stylesheet
+│       ├── img/            # Temporary placeholder images
+│       │   ├── default_pfp.svg
+│       │   └── zybooks_cat.jpg
 │       └── js/
 │           └── main.js     # Client-side JavaScript
 ├── db/

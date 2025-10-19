@@ -73,10 +73,26 @@ app.use((req, res, next) => {
 // const indexRouter = require('./routes/index');
 // app.use('/', indexRouter);
 
-// Placeholder home route
+// Home route
 app.get('/', csrfProtection, (req, res) => {
   res.render('index', {
     title: 'Home',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+// Dashboard route
+app.get('/dashboard', csrfProtection, (req, res) => {
+  res.render('dashboard', {
+    title: 'Dashboard',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+// Profile route
+app.get('/profile', csrfProtection, (req, res) => {
+  res.render('profile', {
+    title: 'Profile',
     csrfToken: req.csrfToken(),
   });
 });
