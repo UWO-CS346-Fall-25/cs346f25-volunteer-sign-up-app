@@ -55,7 +55,7 @@ exports.getAbout = async (req, res, next) => {
 exports.getProfile = async (req, res, next) => {
   try {
     res.render('profile', {
-      title: 'Dashboard',
+      title: 'Profile',
       csrfToken: req.csrfToken(),
     });
   } catch (error) {
