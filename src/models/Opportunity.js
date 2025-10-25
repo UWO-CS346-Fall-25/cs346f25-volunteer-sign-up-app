@@ -91,6 +91,16 @@ Opportunity.getJoined = function() {
 }
 
 /**
+ * Returns all opportunities which have not been joined
+ * @returns An array of not joined opportunities
+ */
+Opportunity.getNotJoined = function() {
+  return opportunities.filter(function(opportunity) {
+    return !opportunity.isJoined;
+  });
+}
+
+/**
  * Sorts all opportunities by their title
  * @param {boolean} ascending Whether to sort the array in ascending order
  * @returns A sorted array of opportunities
