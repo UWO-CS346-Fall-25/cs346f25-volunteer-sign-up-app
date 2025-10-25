@@ -77,7 +77,9 @@ Opportunity.add = function(toAdd) {
  * @returns A copy of all stored opportunities
  */
 Opportunity.getAll = function() {
-  return opportunities.values
+  return opportunities.filter(function() {
+    return true;
+  });
 }
 
 /**
