@@ -105,10 +105,11 @@ Opportunity.getNotJoined = function() {
 /**
  * Sorts all opportunities by their title
  * @param {boolean} ascending Whether to sort the array in ascending order
+ * @param {[Opportunity]?} toSort An optional array of opportunities to sort
  * @returns A sorted array of opportunities
  */
-Opportunity.getSorted = function(ascending) {
-  let sorted = opportunities.sort(function(a, b) {
+Opportunity.getSorted = function(ascending, toSort) {
+  let sorted = (toSort ?? opportunities).sort(function(a, b) {
     let titleA = a.title.toLowerCase();
     let titleB = b.title.toLowerCase();
 
@@ -129,11 +130,12 @@ Opportunity.getSorted = function(ascending) {
 /**
  * Returns all opportunities whose zip code matches the given value
  * @param {number} zipCode The zip code of all opportunities to fetch
+ * @param {[Opportunity]?} toFilter An optional array of opportunities to filter
  * @returns All opportunities filtered by their zip code
  */
-Opportunity.getFiltered = function(zipCode) {
-  return opportunities.filter(function(opportunity) {
-    return opportunity.zipCode === zipCode;
+Opportunity.getFiltered = function(zipCode, toFilter) {
+  return (toFilter ?? opportunities).filter(function(opportunity) {
+    return opportunity.zipCode == zipCode;
   });
 }
 
