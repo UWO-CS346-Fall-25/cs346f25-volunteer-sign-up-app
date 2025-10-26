@@ -30,9 +30,11 @@ This is based on a teaching template for building web applications with:
 │   │   └── users.js        # User routes
 │   ├── controllers/        # Request handlers
 │   │   ├── indexController.js
+│   │   ├── opportunityController.js
 │   │   └── userController.js
 │   ├── models/             # Database models
 │   │   ├── db.js           # Database connection
+│   │   ├── opportunity.js  # Opportunity model
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
 │   │   ├── index.ejs       # Home page
