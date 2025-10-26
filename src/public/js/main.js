@@ -118,6 +118,33 @@ function initInteractiveElements() {
       }
     });
   });
+
+  // Add functionality for sort buttons
+  let sortMain = false;
+  let sortUpcoming = false;
+  let sortExpired = false;
+
+  const sortMainBtn = document.getElementById("button-sort");
+  const sortUpcomingBtn = document.getElementById("sort-upcoming");
+  const sortExpiredBtn = document.getElementById("sort-expired");
+
+  sortMainBtn?.addEventListener('click', function (e) {
+    sortMain ^= true;
+    const query = sortMain ? '?sort=true' : '';
+    window.location.href = `/filter${query}`;
+  });
+
+  sortUpcomingBtn?.addEventListener('click', function (e) {
+    sortUpcoming ^= true;
+    const query = sortUpcoming ? '?sortupcoming=true' : '';
+    window.location.href = `/dashboard/joined${query}`;
+  });
+
+  sortExpiredBtn?.addEventListener('click', function (e) {
+    sortExpired ^= true;
+    const query = sortExpired ? '?sortexpired=true' : '';
+    window.location.href = `/dashboard/joined${query}`;
+  });
 }
 
 /**
