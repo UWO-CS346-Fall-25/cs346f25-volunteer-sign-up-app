@@ -22,10 +22,14 @@ const OpportunityModel = require('../models/Opportunity');
  * Display the home page with filtered opportunities
  */
 exports.getFilteredHome = async (req, res, next) => {
-  let opportunities = OpportunityModel.getFiltered(req.zipCode);
+  let opportunities = OpportunityModel.getAll();
 
-  if (req.sort) {
-    opportunities = OpportunityModel.getSorted(true, opportunities);
+  if (req.query.zipcode) {
+    opportunities = OpportunityModel.getFiltered(req.query.zipcode, opportunities);
+  }
+
+  if (req.query.sort) {
+    opportunities = OpportunityModel.getSorted(req.query.sort === 'true', opportunities);
   }
 
   try {

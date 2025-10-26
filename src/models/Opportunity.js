@@ -12,8 +12,8 @@ class Opportunity {
    * Opportunity constructor with all required data
    * @param {string} title The title of this opportunity
    * @param {string} description The description of this opportunity
-   * @param {Date} startDate The start date of this opportunity
-   * @param {Date} endDate The end date of this opportunity
+   * @param {number} startDate The start date of this opportunity
+   * @param {number} endDate The end date of this opportunity
    * @param {[string]} organizers The email addresses of this opportunity's organizers
    * @param {string} image The path to the image for this opportunity
    * @param {number} zipCode The zip code associated with this opportunity
@@ -24,12 +24,15 @@ class Opportunity {
     // Default values to ensure all properties are present in the class
     this.title = title ?? '[Title]';
     this.description = description ?? '[Description]';
-    this.startDate = startDate ?? Date.now();
-    this.endDate = endDate ?? Date.now();
+    this.startDate = new Date(startDate ?? Date.now());
+    this.endDate = new Date(endDate ?? Date.now());
     this.organizers = organizers ?? ['[Organizer]'];
     this.image = image ?? '/img/zybooks_cat.jpg';
     this.zipCode = zipCode ?? 12345;
     this.isJoined = isJoined ?? false;
+    this.dateStr = `${this.startDate.getMonth() + 1}/${this.startDate.getDate()}/${this.startDate.getFullYear()}`;
+    this.startTimeStr = `${this.startDate.getHours()}:${String(this.startDate.getMinutes()).padStart(2, '0')}`;
+    this.endTimeStr = `${this.endDate.getHours()}:${String(this.endDate.getMinutes()).padStart(2, '0')}`;
   }
 
   /**
@@ -54,8 +57,8 @@ const opportunities = [
   new Opportunity(
     'Opportunity B',
     'Very cool description',
-    86400,
-    172800,
+    8640000,
+    17280000,
     ['An organizer'],
     '/img/zybooks_cat.jpg',
     12345,
@@ -66,7 +69,7 @@ const opportunities = [
     'Opportunity A',
     'Mediocre description',
     Date.now(),
-    Date.now() + 86400,
+    Date.now() + 21600000,
     ['Another organizer', 'That organizer'],
     '/img/zybooks_cat.jpg',
     12345,
@@ -76,8 +79,8 @@ const opportunities = [
   new Opportunity(
     'Opportunity D',
     'Cool description',
-    345600,
-    691200,
+    34560000,
+    69120000,
     ['A couple organizers'],
     '/img/zybooks_cat.jpg',
     23456,
@@ -88,7 +91,7 @@ const opportunities = [
     'Opportunity C',
     'Amazing description',
     0,
-    Date.now() - 86400,
+    Date.now() - 21600000,
     ['This organizer'],
     '/img/zybooks_cat.jpg',
     34567,
