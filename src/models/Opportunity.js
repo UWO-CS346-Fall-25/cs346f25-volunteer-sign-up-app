@@ -58,11 +58,11 @@ const opportunities = [
     'Opportunity B',
     'Very cool description',
     8640000,
-    17280000,
+    Date.now() + 21600000,
     ['An organizer'],
     '/img/zybooks_cat.jpg',
     12345,
-    false,
+    true,
   ),
 
   new Opportunity(

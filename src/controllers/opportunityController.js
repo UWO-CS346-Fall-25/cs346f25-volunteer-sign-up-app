@@ -56,12 +56,12 @@ exports.getDashboardJoined = async (req, res, next) => {
     return opportunity.isExpired();
   });
 
-  if (req.sortupcoming) {
-    upcoming = OpportunityModel.getSorted(true, upcoming);
+  if (req.query.sortupcoming) {
+    upcoming = OpportunityModel.getSorted(req.query.sortupcoming === 'true', upcoming);
   }
 
-  if (req.sortexpired) {
-    expired = OpportunityModel.getSorted(true, expired);
+  if (req.query.sortexpired) {
+    expired = OpportunityModel.getSorted(req.query.sortexpired === 'true', expired);
   }
 
   try {
