@@ -91,6 +91,22 @@ app.get('/dashboard/joined', csrfProtection, OpportunityController.getDashboardJ
 // Profile route
 app.get('/profile', csrfProtection, IndexController.getProfile);
 
+// Dashboard route
+app.get('/dashboard', csrfProtection, (req, res) => {
+  res.render('dashboard', {
+    title: 'Dashboard',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+// Profile route
+app.get('/profile', csrfProtection, (req, res) => {
+  res.render('profile', {
+    title: 'Profile',
+    csrfToken: req.csrfToken(),
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).render('error', {
