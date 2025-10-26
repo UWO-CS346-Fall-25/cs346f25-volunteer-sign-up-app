@@ -17,6 +17,7 @@
   --secondary-color: #6c757d;
   --success-color: #28a745;
   --danger-color: #f1182d;
+  --dark-danger-color: #850b17;
   --warning-color: #ffc107;
   --info-color: #17b868;
   --light-color: #e8ffed;
@@ -26,6 +27,7 @@
     Arial, sans-serif;
   --border-radius: 4px;
   --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --text-shadow: 1px 1px 2px black;
 }
 
 /* Reset/Base Styles */
@@ -33,17 +35,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-shadow: var(--text-shadow);
 }
 
 body {
   font-family: var(--font-family);
   line-height: 1.6;
-  color: var(--dark-color);
+  color: white;
   background-color: var(--light-color);
 }
 
 a {
-  color: var(--primary-color);
+  color: white;
   text-decoration: none;
 }
 
@@ -61,7 +64,6 @@ a:hover {
 /* Header & Navigation */
 header {
   background-color: var(--dark-color);
-  color: white;
   padding: 1rem 0;
   box-shadow: var(--box-shadow);
 }
@@ -75,7 +77,6 @@ nav .container {
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: white;
 }
 
 .logo:hover {
@@ -89,14 +90,9 @@ nav .container {
   align-items: center;
 }
 
-.nav-links a {
-  color: white;
-}
-
 .nav-links button {
   background: none;
   border: none;
-  color: white;
   cursor: pointer;
   font-size: 1rem;
   font-family: var(--font-family);
@@ -116,12 +112,15 @@ main {
   padding: 2rem 0;
 }
 
+input {
+  text-shadow: none;
+}
+
 /* Hero Section */
 .hero {
   text-align: center;
   padding: 1rem 0;
   background: linear-gradient(135deg, var(--primary-color), var(--info-color));
-  color: white;
   border-radius: var(--border-radius);
   margin-bottom: 2rem;
 }
@@ -132,13 +131,6 @@ main {
 
 .hero p {
   font-size: 1.25rem;
-}
-
-button {
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 10px;
-  padding: 4px;
 }
 
 /* Opportunity entries */
@@ -154,11 +146,13 @@ button {
   margin: auto;
   width: 100%;
   border: 1px solid var(--primary-color);
+  color: var(--dark-color);
 }
 
 .opportunities td {
   text-align: center;
   vertical-align: top;
+  text-shadow: none;
 }
 
 .td-title {
@@ -188,6 +182,8 @@ button {
   font-weight: bold;
   display: inline-flex;
   text-decoration: underline;
+  color: var(--dark-color);
+  text-shadow: none;
 }
 
 /* Dashboard page */
@@ -202,6 +198,11 @@ button {
   height: 20px;
 }
 
+#notify label {
+  color: var(--dark-color);
+  text-shadow: none;
+}
+
 /* Profile Page */
 .profile-data {
   padding: 5vw;
@@ -212,6 +213,11 @@ button {
   margin: auto;
   border: 1px solid var(--primary-color);
   border-radius: 10%;
+}
+
+.profile-data td {
+  color: var(--dark-color);
+  text-shadow: none;
 }
 
 .profile-data img {
@@ -228,8 +234,12 @@ button {
   font-size: 0.75rem;
 }
 
-.profile-data #delete-account {
+#log-out {
   background-color: var(--danger-color);
+}
+
+#log-out:hover {
+  background-color: var(--dark-danger-color);
 }
 
 /* Error Page */
@@ -274,10 +284,12 @@ button {
   cursor: pointer;
   font-size: 1rem;
   text-decoration: none;
+  border-radius: 10px;
+  padding: 4px;
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: var(--dark-color);
   text-decoration: none;
 }
 
@@ -305,7 +317,6 @@ button {
 /* Footer */
 footer {
   background-color: var(--dark-color);
-  color: white;
   text-align: left;
   padding: 2rem 0;
 }

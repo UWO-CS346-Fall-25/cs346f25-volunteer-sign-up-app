@@ -15,6 +15,9 @@ const helmet = require('helmet');
 const session = require('express-session');
 const csrf = require('csurf');
 
+const IndexController = require('./controllers/indexController');
+const OpportunityController = require('./controllers/opportunityController');
+
 // Initialize Express app
 const app = express();
 
@@ -74,12 +77,19 @@ app.use((req, res, next) => {
 // app.use('/', indexRouter);
 
 // Home route
-app.get('/', csrfProtection, (req, res) => {
-  res.render('index', {
-    title: 'Home',
-    csrfToken: req.csrfToken(),
-  });
-});
+app.get('/', csrfProtection, IndexController.getHome);
+
+// Home route with filtering
+app.get('/filter', csrfProtection, OpportunityController.getFilteredHome);
+
+// Dashboard route
+app.get('/dashboard', csrfProtection, IndexController.getDashboard);
+
+// Dashboard route with sorting
+app.get('/dashboard/joined', csrfProtection, OpportunityController.getDashboardJoined);
+
+// Profile route
+app.get('/profile', csrfProtection, IndexController.getProfile);
 
 // Dashboard route
 app.get('/dashboard', csrfProtection, (req, res) => {

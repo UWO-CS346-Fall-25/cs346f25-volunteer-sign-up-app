@@ -32,60 +32,38 @@
     <div class="filter-bar">
       <p>Find an opportunity!</p>
       <div>
-        <button id="button-sort">Sort Results</button>
-        <button id="button-filter">Filter Results</button>
+        <button class="btn" id="button-sort">Sort Results</button>
+        <button class="btn" id="button-filter">Filter Results</button>
         <label for="input-zip">Zip Code:</label>
         <input id="input-zip" name="input-zip" type="text">
       </div>
     </div>
     <section class="opportunities">
       <ol>
-        <!--Opportunity entry 1-->
-        <li>
-          <table>
-            <tr>
-              <td rowspan="4">
-                <img class="td-image"
-                  alt="Opportunity Picture"
-                  src="/img/zybooks_cat.jpg">
-              </td>
-              <td class="td-title" colspan="3">Undefined Opportunity Title 1</td>
-              <td class="td-date">10/18/2025</td>
-            </tr>
-            <tr>
-              <td colspan="3" rowspan="2" class="td-description">Undefined Opportunity Description</td>
-              <td rowspan="2" class="td-time">1:00PM-3:00PM</td>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td colspan="3" class="td-organizers">Undefined Opportunity Organizer(s)</td>
-              <td class="td-zip">Zip Code: 12345</td>
-            </tr>
-          </table>
-        </li>
-        <!--Opportunity entry 2-->
-        <li>
-          <table>
-            <tr>
-              <td rowspan="4">
-                <img class="td-image"
-                  alt="Opportunity Picture"
-                  src="/img/zybooks_cat.jpg">
-              </td>
-              <td class="td-title" colspan="3">Undefined Opportunity Title 2</td>
-              <td class="td-date">10/18/2025</td>
-            </tr>
-            <tr>
-              <td colspan="3" rowspan="2" class="td-description">Undefined Opportunity Description</td>
-              <td rowspan="2" class="td-time">1:00PM-3:00PM</td>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td colspan="3" class="td-organizers">Undefined Opportunity Organizer(s)</td>
-              <td class="td-zip">Zip Code: 12345</td>
-            </tr>
-          </table>
-        </li>
+        <% opportunities.forEach(function(opportunity) { %>
+          <li>
+            <table>
+              <tr>
+                <td rowspan="4">
+                  <img class="td-image"
+                    alt="Opportunity Picture"
+                    src="<%= opportunity.image %>">
+                </td>
+                <td class="td-title" colspan="3"><%= opportunity.title %></td>
+                <td class="td-date"><%= opportunity.dateStr %></td>
+              </tr>
+              <tr>
+                <td colspan="3" rowspan="2" class="td-description"><%= opportunity.description %></td>
+                <td rowspan="2" class="td-time"><%= opportunity.startTimeStr %> - <%= opportunity.endTimeStr %></td>
+              </tr>
+              <tr></tr>
+              <tr>
+                <td colspan="3" class="td-organizers"><%= opportunity.organizers.join(', ') %></td>
+                <td class="td-zip">Zip Code: <%= opportunity.zipCode %></td>
+              </tr>
+            </table>
+          </li>
+        <% }) %>
       </ol>
     </section>
   </main>
