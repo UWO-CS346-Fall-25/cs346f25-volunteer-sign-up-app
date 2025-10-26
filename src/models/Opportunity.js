@@ -51,7 +51,49 @@ class Opportunity {
 }
 
 const opportunities = [
+  new Opportunity(
+    'Opportunity B',
+    'Very cool description',
+    86400,
+    172800,
+    ['An organizer'],
+    '/img/zybooks_cat.jpg',
+    12345,
+    false,
+  ),
 
+  new Opportunity(
+    'Opportunity A',
+    'Mediocre description',
+    Date.now(),
+    Date.now() + 86400,
+    ['Another organizer', 'That organizer'],
+    '/img/zybooks_cat.jpg',
+    12345,
+    true,
+  ),
+
+  new Opportunity(
+    'Opportunity D',
+    'Cool description',
+    345600,
+    691200,
+    ['A couple organizers'],
+    '/img/zybooks_cat.jpg',
+    23456,
+    true,
+  ),
+
+  new Opportunity(
+    'Opportunity C',
+    'Amazing description',
+    0,
+    Date.now() - 86400,
+    ['This organizer'],
+    '/img/zybooks_cat.jpg',
+    34567,
+    false,
+  ),
 ]
 
 /**
