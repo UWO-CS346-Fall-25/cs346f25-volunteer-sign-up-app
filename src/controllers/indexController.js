@@ -62,6 +62,10 @@ exports.getDashboard = async (req, res, next) => {
  */
 exports.getProfile = async (req, res, next) => {
   try {
+    if (!req.session.user) {
+      res.redirect('/login');
+    }
+
     res.render('profile', {
       title: 'Profile',
       csrfToken: req.csrfToken(),

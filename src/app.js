@@ -107,6 +107,22 @@ app.get('/profile', csrfProtection, (req, res) => {
   });
 });
 
+// Login route
+app.get('/login', csrfProtection, (req, res) => {
+  res.render('users/login', {
+    title: 'Login',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+// Register route
+app.get('/register', csrfProtection, (req, res) => {
+  res.render('users/register', {
+    title: 'Register',
+    csrfToken: req.csrfToken(),
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).render('error', {

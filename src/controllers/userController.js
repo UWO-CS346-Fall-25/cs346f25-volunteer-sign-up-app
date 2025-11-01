@@ -28,7 +28,7 @@ exports.getRegister = (req, res) => {
  */
 exports.postRegister = async (req, res, next) => {
   try {
-    // const { username, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     // Validate input
     // Hash password
@@ -36,7 +36,14 @@ exports.postRegister = async (req, res, next) => {
     // const user = await User.create({ username, email, password: hashedPassword });
 
     // Set session
-    // req.session.user = { id: user.id, username: user.username };
+    req.session.user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      // TODO: Password hashing
+      password: password,
+      creationDate: Date.now()
+    };
 
     // Redirect to home or dashboard
     res.redirect('/');
@@ -62,7 +69,7 @@ exports.getLogin = (req, res) => {
  */
 exports.postLogin = async (req, res, next) => {
   try {
-    // const { email, password } = req.body;
+    const { email, password } = req.body;
 
     // Find user by email
     // const user = await User.findByEmail(email);
@@ -77,7 +84,11 @@ exports.postLogin = async (req, res, next) => {
     // }
 
     // Set session
-    // req.session.user = { id: user.id, username: user.username };
+    req.session.user = {
+      email: email,
+      // TODO: Password hashing
+      password: password
+    };
 
     // Redirect to home or dashboard
     res.redirect('/');
