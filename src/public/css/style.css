@@ -14,7 +14,7 @@
 /* CSS Variables */
 :root {
   --primary-color: #419c72;
-  --primary-light-color: #b9ffc8;
+  --primary-light-color: #d7fcdf;
   --secondary-color: #6c757d;
   --success-color: #28a745;
   --danger-color: #f1182d;
@@ -216,8 +216,9 @@ input {
 .profile-data table {
   padding: 2%;
   margin: auto;
-  border: 1px solid var(--primary-color);
-  border-radius: 10%;
+  background-color: var(--primary-light-color);
+  border: 5px solid var(--primary-color);
+  border-radius: 10px;
 }
 
 .profile-data td {
