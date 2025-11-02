@@ -20,10 +20,14 @@ const router = express.Router();
 
 // Import controllers
 const indexController = require('../controllers/indexController');
+const opportunityController = require('../controllers/opportunityController');
 
 // Define routes
 router.get('/', indexController.getHome);
 router.get('/dashboard', indexController.getDashboard);
 router.get('/profile', indexController.getProfile);
+
+router.get('/filter', opportunityController.getFilteredHome);
+router.get('/dashboard/joined', opportunityController.getDashboardJoined);
 
 module.exports = router;
