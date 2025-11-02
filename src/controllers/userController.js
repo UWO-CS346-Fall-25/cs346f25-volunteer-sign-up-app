@@ -12,7 +12,7 @@
 // const User = require('../models/User');
 
 /**
- * GET /users/register
+ * GET /register
  * Display registration form
  */
 exports.getRegister = (req, res) => {
@@ -23,7 +23,7 @@ exports.getRegister = (req, res) => {
 };
 
 /**
- * POST /users/register
+ * POST /register
  * Process registration form
  */
 exports.postRegister = async (req, res, next) => {
@@ -56,7 +56,7 @@ exports.postRegister = async (req, res, next) => {
 };
 
 /**
- * GET /users/login
+ * GET /login
  * Display login form
  */
 exports.getLogin = (req, res) => {
@@ -67,7 +67,7 @@ exports.getLogin = (req, res) => {
 };
 
 /**
- * POST /users/login
+ * POST /login
  * Process login form
  */
 exports.postLogin = async (req, res, next) => {
@@ -105,15 +105,15 @@ exports.postLogin = async (req, res, next) => {
 };
 
 /**
- * POST /users/logout
+ * GET /logout
  * Logout user
  */
-exports.postLogout = (req, res) => {
+exports.getLogout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error('Error destroying session:', err);
     }
-    res.redirect('/');
+    res.redirect('/login');
   });
 };
 

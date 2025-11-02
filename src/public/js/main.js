@@ -145,6 +145,13 @@ function initInteractiveElements() {
     const query = sortExpired ? '?sortexpired=true' : '';
     window.location.href = `/dashboard/joined${query}`;
   });
+
+  // Add log out functionality
+  const logoutButton = document.getElementById("log-out");
+
+  logoutButton?.addEventListener('click', function (e) {
+    window.location.href = '/logout';
+  });
 }
 
 /**
