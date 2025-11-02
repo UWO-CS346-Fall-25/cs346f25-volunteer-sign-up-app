@@ -280,6 +280,7 @@ input {
   margin-left: 25%;
   color: var(--secondary-color);
   text-shadow: none;
+  font-weight: bold;
 }
 
 input[type=text], input[type=email], input[type=password], input[type=number] {
