@@ -44,7 +44,7 @@ exports.postRegister = async (req, res, next) => {
       email: email,
       // TODO: Password hashing
       password: password,
-      creationDate: date,
+      creationDate: Date.now(),
       dateStr: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     };
 
@@ -94,7 +94,7 @@ exports.postLogin = async (req, res, next) => {
       // TODO: Password hashing
       password: password,
       creationDate: Date.now(),
-      dateStr: '11/1/2025'
+      dateStr: '11/1/2025',
     };
 
     // Redirect to home or dashboard
