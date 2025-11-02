@@ -29,6 +29,7 @@ exports.getHome = async (req, res, next) => {
       // data: data,
       csrfToken: req.csrfToken(),
       opportunities: OpportunityModel.getAll(),
+      session: req.session.user,
     });
   } catch (error) {
     next(error);
@@ -54,6 +55,7 @@ exports.getDashboard = async (req, res, next) => {
       expired: OpportunityModel.getJoined().filter(function(opportunity) {
         return opportunity.isExpired();
       }),
+      session: req.session.user,
     });
   } catch (error) {
     next(error);
@@ -73,6 +75,7 @@ exports.getProfile = async (req, res, next) => {
     res.render('profile', {
       title: 'Profile',
       csrfToken: req.csrfToken(),
+      session: req.session.user,
     });
   } catch (error) {
     next(error);
