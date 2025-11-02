@@ -12,7 +12,7 @@
 // const User = require('../models/User');
 
 /**
- * GET /users/register
+ * GET /register
  * Display registration form
  */
 exports.getRegister = (req, res) => {
@@ -23,20 +23,30 @@ exports.getRegister = (req, res) => {
 };
 
 /**
- * POST /users/register
+ * POST /register
  * Process registration form
  */
 exports.postRegister = async (req, res, next) => {
   try {
-    // const { username, email, password } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
     // Validate input
     // Hash password
     // Create user in database
     // const user = await User.create({ username, email, password: hashedPassword });
 
+    const date = new Date(Date.now());
+
     // Set session
-    // req.session.user = { id: user.id, username: user.username };
+    req.session.user = {
+      firstName: firstname,
+      lastName: lastname,
+      email: email,
+      // TODO: Password hashing
+      password: password,
+      creationDate: Date.now(),
+      dateStr: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+    };
 
     // Redirect to home or dashboard
     res.redirect('/');
@@ -46,7 +56,7 @@ exports.postRegister = async (req, res, next) => {
 };
 
 /**
- * GET /users/login
+ * GET /login
  * Display login form
  */
 exports.getLogin = (req, res) => {
@@ -57,12 +67,12 @@ exports.getLogin = (req, res) => {
 };
 
 /**
- * POST /users/login
+ * POST /login
  * Process login form
  */
 exports.postLogin = async (req, res, next) => {
   try {
-    // const { email, password } = req.body;
+    const { email, password } = req.body;
 
     // Find user by email
     // const user = await User.findByEmail(email);
@@ -77,7 +87,15 @@ exports.postLogin = async (req, res, next) => {
     // }
 
     // Set session
-    // req.session.user = { id: user.id, username: user.username };
+    req.session.user = {
+      firstName: 'DefaultFN',
+      lastName: 'DefaultLN',
+      email: email,
+      // TODO: Password hashing
+      password: password,
+      creationDate: Date.now(),
+      dateStr: '11/1/2025',
+    };
 
     // Redirect to home or dashboard
     res.redirect('/');
@@ -87,15 +105,15 @@ exports.postLogin = async (req, res, next) => {
 };
 
 /**
- * POST /users/logout
+ * GET /logout
  * Logout user
  */
-exports.postLogout = (req, res) => {
+exports.getLogout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error('Error destroying session:', err);
     }
-    res.redirect('/');
+    res.redirect('/login');
   });
 };
 

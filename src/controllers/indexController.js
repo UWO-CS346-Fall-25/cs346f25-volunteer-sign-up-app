@@ -29,6 +29,7 @@ exports.getHome = async (req, res, next) => {
       // data: data,
       csrfToken: req.csrfToken(),
       opportunities: OpportunityModel.getAll(),
+      session: req.session.user,
     });
   } catch (error) {
     next(error);
@@ -41,6 +42,10 @@ exports.getHome = async (req, res, next) => {
  */
 exports.getDashboard = async (req, res, next) => {
   try {
+    if (!req.session.user) {
+      res.redirect('/login');
+    }
+
     res.render('dashboard', {
       title: 'Dashboard',
       csrfToken: req.csrfToken(),
@@ -50,6 +55,7 @@ exports.getDashboard = async (req, res, next) => {
       expired: OpportunityModel.getJoined().filter(function(opportunity) {
         return opportunity.isExpired();
       }),
+      session: req.session.user,
     });
   } catch (error) {
     next(error);
@@ -62,9 +68,14 @@ exports.getDashboard = async (req, res, next) => {
  */
 exports.getProfile = async (req, res, next) => {
   try {
+    if (!req.session.user) {
+      res.redirect('/login');
+    }
+
     res.render('profile', {
       title: 'Profile',
       csrfToken: req.csrfToken(),
+      session: req.session.user,
     });
   } catch (error) {
     next(error);

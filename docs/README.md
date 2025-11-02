@@ -4,6 +4,19 @@
 
 This website aims to simplify the process of searching for local volunteer opportunities and signing up for them.
 
+## Containing as of Week 9:
+
+- Login/register pages for rudimentary user sessions and storing temporary data
+<img width="1365" height="566" alt="image" src="https://github.com/user-attachments/assets/5a5b5d02-651e-4a25-bf9f-ed97012cdda7" />
+<img width="1365" height="595" alt="image" src="https://github.com/user-attachments/assets/39c40507-289e-4283-9d18-c68103a4e40b" />
+- Home page for storing all active opportunities that can be joined
+<img width="1365" height="594" alt="image" src="https://github.com/user-attachments/assets/5fb742df-b466-4c09-98b2-5eacc13a0b41" />
+- Dashboard for storing all joined opportunities, expired and active
+<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/21613095-d9b5-4a84-9755-8e911a401f34" />
+- Profile page for viewing account information (currently the inputs from the login/register pages) and logging out
+<img width="1365" height="592" alt="image" src="https://github.com/user-attachments/assets/62e8478e-355f-4368-a0cb-ecea7017ce03" />
+
+
 This is based on a teaching template for building web applications with:
 - **Node.js 20**: JavaScript runtime
 - **Express 4**: Web application framework
@@ -37,9 +50,12 @@ This is based on a teaching template for building web applications with:
 │   │   ├── opportunity.js  # Opportunity model
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
+│   │   ├── users/          # EJS views for user sessions (login/logout)
+│   │   │   ├── login.ejs   # Login page
+│   │   │   └── register.ejs # Register page
 │   │   ├── index.ejs       # Home page
 │   │   ├── dashboard.ejs   # Dashboard page
-│   │   ├── profile.ejs   # Profile page
+│   │   ├── profile.ejs     # Profile page
 │   │   ├── error.ejs       # Error page
 │   │   └── layout.ejs      # Layout template (optional)
 │   └── public/             # Static files

@@ -14,6 +14,7 @@
 /* CSS Variables */
 :root {
   --primary-color: #419c72;
+  --primary-light-color: #d7fcdf;
   --secondary-color: #6c757d;
   --success-color: #28a745;
   --danger-color: #f1182d;
@@ -139,13 +140,15 @@ input {
 }
 
 .opportunities li {
-  padding: 1vw;
+  padding: 2vw;
 }
 
 .opportunities table {
-  margin: auto;
+  padding: 5px;
   width: 100%;
-  border: 1px solid var(--primary-color);
+  border: 4px solid var(--primary-color);
+  border-radius: 10px;
+  background-color: var(--primary-light-color);
   color: var(--dark-color);
 }
 
@@ -174,7 +177,11 @@ input {
 /* Filter bars */
 .filter-bar {
   justify-content: space-between;
-  display: flex;
+  width: 50%;
+}
+
+.filter-bar input[type=number] {
+  width: 30%;
 }
 
 .filter-bar p {
@@ -211,8 +218,9 @@ input {
 .profile-data table {
   padding: 2%;
   margin: auto;
-  border: 1px solid var(--primary-color);
-  border-radius: 10%;
+  background-color: var(--primary-light-color);
+  border: 5px solid var(--primary-color);
+  border-radius: 10px;
 }
 
 .profile-data td {
@@ -241,6 +249,64 @@ input {
 #log-out:hover {
   background-color: var(--dark-danger-color);
 }
+
+/* Login/Register pages */
+
+.user-form {
+  padding: 5vw 15vw;
+}
+
+.user-form form {
+  background-color: var(--primary-light-color);
+  border: 5px solid var(--primary-color);
+  border-radius: 10px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-bottom: -50px;
+}
+
+.user-form label {
+  width: 35%;
+  display: inline-block;
+  text-align: right;
+  margin-right: 5px;
+  color: var(--dark-color);
+  text-shadow: none;
+}
+
+.user-form a {
+  text-align: center;
+  margin-left: 25%;
+  color: var(--secondary-color);
+  text-shadow: none;
+  font-weight: bold;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=number] {
+  padding: 5px;
+  margin: 5px;
+  width: 40%;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+input[type=submit] {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding: 5px;
+  border: 1px solid var(--dark-color);
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  text-shadow: var(--text-shadow);
+  color: white;
+}
+
+input[type=submit]:hover {
+  background-color: var(--dark-color);
+}
+
+
 
 /* Error Page */
 .error-page {
