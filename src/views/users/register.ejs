@@ -27,9 +27,28 @@
 
   <main class="container">
     <div class="register-form">
-      <form>
+      <form method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         
+        <p>
+          <label for="first-name">First Name:</label>
+          <input type="text" name="first-name" id="first-name" required>
+        </p>
+        <p>
+          <label for="last-name">Last Name:</label>
+          <input type="text" name="last-name" id="last-name" required>
+        </p>
+        <p>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" required>
+        </p>
+        <p>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" required>
+        </p>
+        <input type="submit">
       </form>
+      <a href="/login">Use Existing Account</a>
     </div>
   </main>
 
