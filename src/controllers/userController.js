@@ -35,6 +35,8 @@ exports.postRegister = async (req, res, next) => {
     // Create user in database
     // const user = await User.create({ username, email, password: hashedPassword });
 
+    const date = new Date(Date.now());
+
     // Set session
     req.session.user = {
       firstName: firstName,
@@ -42,7 +44,8 @@ exports.postRegister = async (req, res, next) => {
       email: email,
       // TODO: Password hashing
       password: password,
-      creationDate: Date.now()
+      creationDate: date,
+      dateStr: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     };
 
     // Redirect to home or dashboard
@@ -85,9 +88,13 @@ exports.postLogin = async (req, res, next) => {
 
     // Set session
     req.session.user = {
+      firstName: 'DefaultFN',
+      lastName: 'DefaultLN',
       email: email,
       // TODO: Password hashing
-      password: password
+      password: password,
+      creationDate: Date.now(),
+      dateStr: '11/1/2025'
     };
 
     // Redirect to home or dashboard
