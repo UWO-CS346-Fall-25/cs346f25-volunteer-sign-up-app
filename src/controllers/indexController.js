@@ -41,6 +41,10 @@ exports.getHome = async (req, res, next) => {
  */
 exports.getDashboard = async (req, res, next) => {
   try {
+    if (!req.session.user) {
+      res.redirect('/login');
+    }
+
     res.render('dashboard', {
       title: 'Dashboard',
       csrfToken: req.csrfToken(),
