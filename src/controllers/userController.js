@@ -28,7 +28,7 @@ exports.getRegister = (req, res) => {
  */
 exports.postRegister = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
     // Validate input
     // Hash password
@@ -39,8 +39,8 @@ exports.postRegister = async (req, res, next) => {
 
     // Set session
     req.session.user = {
-      firstName: firstName,
-      lastName: lastName,
+      firstName: firstname,
+      lastName: lastname,
       email: email,
       // TODO: Password hashing
       password: password,
