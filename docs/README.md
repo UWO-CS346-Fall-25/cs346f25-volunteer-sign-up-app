@@ -47,6 +47,7 @@ This is based on a teaching template for building web applications with:
 │   │   └── userController.js
 │   ├── models/             # Database models
 │   │   ├── db.js           # Database connection
+│   │   ├── supabase.js     # Supabase connection
 │   │   ├── opportunity.js  # Opportunity model
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
@@ -71,9 +72,11 @@ This is based on a teaching template for building web applications with:
 │   ├── seed.js             # Seed runner
 │   ├── reset.js            # Database reset script
 │   ├── migrations/         # Database migrations
-│   │   └── 001_create_users_table.sql
+│   │   ├── 001_create_users_table.sql
+│   │   └── 002_create_opportunities_table.sql
 │   └── seeds/              # Database seeds
-│       └── 001_seed_users.sql
+│       ├── 001_seed_users.sql
+│       └── 002_seed_opportunities.sql
 ├── docs/                   # Documentation
 │   ├── README.md           # This file
 │   ├── SETUP.md            # Setup instructions

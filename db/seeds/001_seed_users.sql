@@ -4,10 +4,10 @@
 
 -- Insert sample users
 -- Password: 'password123' (In production, this should be hashed with bcrypt)
-INSERT INTO users (username, email, password) VALUES
-  ('john_doe', 'john@example.com', '$2b$10$YourHashedPasswordHere'),
-  ('jane_smith', 'jane@example.com', '$2b$10$YourHashedPasswordHere'),
-  ('admin', 'admin@example.com', '$2b$10$YourHashedPasswordHere')
+INSERT INTO users (first_name, last_name, email, password) VALUES
+  ('john', 'doe', 'john@example.com', '$2b$10$YourHashedPasswordHere'),
+  ('jane', 'smith', 'jane@example.com', '$2b$10$YourHashedPasswordHere'),
+  ('admin', 'user', 'admin@example.com', '$2b$10$YourHashedPasswordHere')
 ON CONFLICT (email) DO NOTHING;
 
 -- Note: The passwords above are placeholders.
