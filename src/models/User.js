@@ -4,7 +4,7 @@
  * This model handles all database operations related to users.
  * Use parameterized queries ($1, $2, etc.) to prevent SQL injection.
  *
- * Example methods:
+ * Methods:
  * - findAll(): Get all users
  * - findById(id): Get user by ID
  * - findByEmail(email): Get user by email
@@ -13,7 +13,7 @@
  * - delete(id): Delete a user
  */
 
-const db = require('./db');
+const supabase = require('./supabase');
 
 class User {
   /**
@@ -21,10 +21,16 @@ class User {
    * @returns {Promise<Array>} Array of users
    */
   static async findAll() {
-    const query =
-      'SELECT id, username, email, created_at FROM users ORDER BY created_at DESC';
-    const result = await db.query(query);
-    return result.rows;
+    const { data, error } = await supabase.from('users')
+      .select('id, first_name, last_name, email, created_at')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Failed to return all users: ' + error.message);
+      return [];
+    }
+    
+    return data;
   }
 
   /**
@@ -33,10 +39,16 @@ class User {
    * @returns {Promise<object|null>} User object or null
    */
   static async findById(id) {
-    const query =
-      'SELECT id, username, email, created_at FROM users WHERE id = $1';
-    const result = await db.query(query, [id]);
-    return result.rows[0] || null;
+    const { data, error } = await supabase.from('users')
+      .select('id, first_name, last_name, email, created_at, joined_events')
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Failed to find user by ID: ' + error.message);
+      return null;
+    }
+    
+    return data[0] || null;
   }
 
   /**
@@ -45,9 +57,16 @@ class User {
    * @returns {Promise<object|null>} User object or null
    */
   static async findByEmail(email) {
-    const query = 'SELECT * FROM users WHERE email = $1';
-    const result = await db.query(query, [email]);
-    return result.rows[0] || null;
+    const { data, error } = await supabase.from('users')
+      .select('id, first_name, last_name, email, password, created_at, joined_events')
+      .eq('email', email);
+    
+    if (error) {
+      console.error('Failed to find user by email: ' + error.message);
+      return null;
+    }
+    
+    return data[0] || null;
   }
 
   /**
@@ -56,14 +75,17 @@ class User {
    * @returns {Promise<object>} Created user object
    */
   static async create(userData) {
-    const { username, email, password } = userData;
-    const query = `
-      INSERT INTO users (username, email, password)
-      VALUES ($1, $2, $3)
-      RETURNING id, username, email, created_at
-    `;
-    const result = await db.query(query, [username, email, password]);
-    return result.rows[0];
+    const { firstname, lastname, email, password } = userData;
+    const { data, error } = await supabase.from('users')
+      .insert({ first_name: firstname, last_name: lastname, email: email, password: password, joined_events: [] })
+      .select('id, first_name, last_name, email, created_at, joined_events');
+
+    if (error) {
+      console.error('Unable to create user: ' + error.message);
+      return null;
+    }
+
+    return data[0] || null;
   }
 
   /**
@@ -73,15 +95,18 @@ class User {
    * @returns {Promise<object>} Updated user object
    */
   static async update(id, userData) {
-    const { username, email } = userData;
-    const query = `
-      UPDATE users
-      SET username = $1, email = $2, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $3
-      RETURNING id, username, email, created_at, updated_at
-    `;
-    const result = await db.query(query, [username, email, id]);
-    return result.rows[0];
+    const { firstname, lastname, email, events } = userData;
+    const { data, error } = supabase.from('users')
+      .update({ first_name: firstname, last_name: lastname, email: email, joined_events: events })
+      .eq('id', id)
+      .select('id, first_name, last_name, email, created_at, joined_events');
+    
+    if (error) {
+      console.error('Failed to update user: ' + error.message);
+      return null;
+    }
+
+    return data[0] || null;
   }
 
   /**
@@ -90,9 +115,17 @@ class User {
    * @returns {Promise<boolean>} True if deleted, false otherwise
    */
   static async delete(id) {
-    const query = 'DELETE FROM users WHERE id = $1';
-    const result = await db.query(query, [id]);
-    return result.rowCount > 0;
+    const { data, error } = supabase.from('users')
+      .delete()
+      .eq('id', id)
+      .select('id');
+
+    if (error) {
+      console.error('Failed to delete user with ID: ' + error.message);
+      return null;
+    }
+    
+    return data[0] || null;
   }
 }
 

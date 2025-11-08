@@ -9,7 +9,7 @@
  */
 
 // Import models
-// const User = require('../models/User');
+const User = require('../models/User');
 
 /**
  * GET /register
@@ -33,22 +33,27 @@ exports.postRegister = async (req, res, next) => {
     // Validate input
     // Hash password
     // Create user in database
-    // const user = await User.create({ username, email, password: hashedPassword });
+    const user = await User.create({ firstname, lastname, email, password });
+    if (!user) {
+      // TODO: log error
+      res.redirect('/register');
+      return;
+    }
 
-    const date = new Date(Date.now());
+    const createdAt = Date.parse(user.created_at);
+    const date = new Date(createdAt);
 
     // Set session
     req.session.user = {
-      firstName: firstname,
-      lastName: lastname,
-      email: email,
-      // TODO: Password hashing
-      password: password,
-      creationDate: Date.now(),
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      creationDate: createdAt,
       dateStr: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     };
 
-    // Redirect to home or dashboard
+    // Redirect to home
     res.redirect('/');
   } catch (error) {
     next(error);
@@ -75,26 +80,28 @@ exports.postLogin = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Find user by email
-    // const user = await User.findByEmail(email);
+    const user = await User.findByEmail(email);
 
     // Verify password
-    // if (!user || !await verifyPassword(password, user.password)) {
-    //   return res.render('users/login', {
-    //     title: 'Login',
-    //     error: 'Invalid credentials',
-    //     csrfToken: req.csrfToken(),
-    //   });
-    // }
+    if (!user || password != user.password) {
+      return res.render('users/login', {
+        title: 'Login',
+        error: 'Invalid credentials',
+        csrfToken: req.csrfToken(),
+      });
+    }
+    
+    const createdAt = Date.parse(user.created_at);
+    const date = new Date(createdAt);
 
     // Set session
     req.session.user = {
-      firstName: 'DefaultFN',
-      lastName: 'DefaultLN',
-      email: email,
-      // TODO: Password hashing
-      password: password,
-      creationDate: Date.now(),
-      dateStr: '11/1/2025',
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      creationDate: createdAt,
+      dateStr: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     };
 
     // Redirect to home or dashboard
