@@ -104,7 +104,7 @@ exports.postLogin = async (req, res, next) => {
       dateStr: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     };
 
-    // Redirect to home or dashboard
+    // Redirect to home
     res.redirect('/');
   } catch (error) {
     next(error);
@@ -123,5 +123,55 @@ exports.getLogout = (req, res) => {
     res.redirect('/login');
   });
 };
+
+/**
+ * GET /changepassword
+ * Display change password form
+ */
+exports.getChangePassword = (req, res) => {
+  res.render('users/changepassword', {
+    title: 'Change Password',
+    csrfToken: req.csrfToken(),
+  });
+};
+
+/**
+ * POST /changepassword
+ * Change user password
+ */
+exports.postChangePassword = async (req, res, next) => {
+  try {
+    const { email, password, newpassword } = req.body;
+
+    // Find user by email
+    const user = await User.findByEmail(email);
+
+    // Verify password
+    if (!user || password != user.password) {
+      return res.render('profile', {
+        title: 'Profile',
+        error: 'Invalid password',
+        csrfToken: req.csrfToken(),
+      });
+    }
+
+    user = await User.update(user.id, {
+      password: newpassword
+    });
+
+    if (!user) {
+      return res.render('profile', {
+        title: 'Profile',
+        error: 'Failed to update',
+        csrfToken: req.csrfToken(),
+      });
+    }
+
+    // Redirect to profile
+    res.redirect('/profile');
+  } catch (error) {
+    next(error);
+  }
+}
 
 // Add more controller methods as needed
