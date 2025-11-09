@@ -2,7 +2,7 @@
 
 This website aims to simplify the process of searching for local volunteer opportunities and signing up for them.
 
-Based on a teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL.
+Based on a teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL via Supabase.
 
 ## As of Week 9:
 
@@ -15,6 +15,18 @@ Based on a teaching template for building secure web applications with Node.js, 
 <img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/21613095-d9b5-4a84-9755-8e911a401f34" />
 - Profile page for viewing account information (currently the inputs from the login/register pages) and logging out
 <img width="1365" height="592" alt="image" src="https://github.com/user-attachments/assets/62e8478e-355f-4368-a0cb-ecea7017ce03" />
+
+## As of Week 10:
+
+- Proper data persistence with connection to Supabase
+- Change Password/Create Opportunity pages for managing persisting data
+- CRUD slice:
+  - CREATE Opportunity
+  - READ Opportunities (list)
+  - UPDATE Opportunities (functional, but not implemented in UI)
+  - DELETE Opportunities (functional, but not implemented in UI)
+
+Row-level security (RLS) is not yet enabled. In the future, once authentication is added, I will add proper password hashing and RLS permissions, utilizing the existing `id` column in the `users` table. Functionally, the data for RLS to work has been implemented, but the permissions have not been set up yet and it is not enabled. Once enabled, RLS would be set up to only allow authenticated users to view their own account information outside of first/last names, and they would only be able to edit their own account information. Opportunities will not let users edit them without being the user defined in the opportunity's `created_by` column.
 
 
 ## Features
@@ -45,20 +57,19 @@ Based on a teaching template for building secure web applications with Node.js, 
    # Edit .env with your database credentials
    ```
 
-4. **Set up PostgreSQL database**
+4. **Set up Supabase database**
    ```bash
    # Create database (adjust credentials as needed)
-   createdb your_database_name
    ```
 
-5. **Run migrations**
+5. **Generate Schema**
    ```bash
-   npm run migrate
+   docs/db/[...].sql
    ```
 
 6. **Seed database (optional)**
    ```bash
-   npm run seed
+   docs/db/[...].csv
    ```
 
 7. **Start the application**
@@ -89,6 +100,7 @@ Based on a teaching template for building secure web applications with Node.js, 
 │   ├── seed.js             # Seed runner
 │   └── reset.js            # Database reset script
 ├── docs/                   # Documentation
+│   ├── db/                 # SQL and seeds for Supabase
 │   ├── README.md           # Documentation overview
 │   ├── SETUP.md            # Setup guide
 │   └── ARCHITECTURE.md     # Architecture details
@@ -102,9 +114,6 @@ Based on a teaching template for building secure web applications with Node.js, 
 
 - `npm start` - Start production server
 - `npm run dev` - Start development server with auto-reload
-- `npm run migrate` - Run database migrations
-- `npm run seed` - Seed database with sample data
-- `npm run reset` - Reset database (WARNING: deletes all data!)
 - `npm run lint` - Check code for linting errors
 - `npm run lint:fix` - Fix linting errors automatically
 - `npm run format` - Format code with Prettier
@@ -130,7 +139,7 @@ Comprehensive documentation is available in the `docs/` folder:
 - **Runtime**: Node.js 20
 - **Framework**: Express 4
 - **Templating**: EJS
-- **Database**: PostgreSQL (with pg driver)
+- **Database**: PostgreSQL / Supabase
 - **Security**: Helmet, express-session, csurf
 - **Development**: ESLint, Prettier, Nodemon
 
@@ -139,6 +148,7 @@ Comprehensive documentation is available in the `docs/` folder:
 - [Express.js Documentation](https://expressjs.com/)
 - [EJS Documentation](https://ejs.co/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Supabase Documentation](https://supabase.com/docs/reference/javascript)
 - [Node.js Documentation](https://nodejs.org/docs/)
 - [OWASP Security Guide](https://owasp.org/)
 

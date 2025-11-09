@@ -122,7 +122,8 @@ input {
   text-align: center;
   padding: 1rem 0;
   background: linear-gradient(135deg, var(--primary-color), var(--info-color));
-  border-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
   margin-bottom: 2rem;
 }
 
@@ -150,6 +151,7 @@ input {
   border-radius: 10px;
   background-color: var(--primary-light-color);
   color: var(--dark-color);
+  table-layout: fixed;
 }
 
 .opportunities td {
@@ -172,6 +174,12 @@ input {
 .td-time,
 .td-zip {
   font-size: 0.8rem;
+}
+
+/* Create bars */
+.create-bar {
+  text-align: center;
+  width: 100%;
 }
 
 /* Filter bars */
@@ -282,7 +290,7 @@ input {
   font-weight: bold;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=number] {
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date] {
   padding: 5px;
   margin: 5px;
   width: 40%;

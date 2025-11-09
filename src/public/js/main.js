@@ -45,8 +45,20 @@ function initFormValidation() {
 function validateForm(form) {
   let isValid = true;
   const requiredFields = form.querySelectorAll('[required]');
+  let pwdField = null;
+  let confirmField = null;
 
   requiredFields.forEach((field) => {
+    if (field.id === 'password') {
+      pwdField ??= field;
+    }
+    if (field.id === 'newpassword') {
+      pwdField = field;
+    }
+    if (field.id === 'confirm-pwd') {
+      confirmField = field;
+    }
+
     if (!field.value.trim()) {
       showError(field, 'This field is required');
       isValid = false;
@@ -54,6 +66,16 @@ function validateForm(form) {
       clearError(field);
     }
   });
+
+  if (pwdField && confirmField) {
+    if (pwdField.value !== confirmField.value) {
+      showError(confirmField, 'Passwords do not match');
+      isValid = false;
+    }
+    else {
+      clearError(confirmField);
+    }
+  }
 
   return isValid;
 }
@@ -74,6 +96,7 @@ function showError(field, message) {
   error.style.color = 'red';
   error.style.fontSize = '0.875rem';
   error.style.marginTop = '0.25rem';
+  error.style.textAlign = 'center';
 
   // Insert after field
   field.parentNode.insertBefore(error, field.nextSibling);
@@ -152,6 +175,27 @@ function initInteractiveElements() {
   logoutButton?.addEventListener('click', function (e) {
     window.location.href = '/logout';
   });
+
+  // Add change password functionality
+  const changePwdButton = document.getElementById("change-pwd");
+
+  changePwdButton?.addEventListener('click', function (e) {
+    window.location.href = '/changepassword';
+  });
+
+  // Add error detection functionality
+  const errorDiv = document.querySelector('div[data-error]');
+
+  if (errorDiv) {
+    showNotification(errorDiv.id, 'warning');
+  }
+
+  // Add create opportunity functionality
+  const createOpportunityButton = document.getElementById("button-create");
+
+  createOpportunityButton?.addEventListener('click', function (e) {
+    window.location.href = '/opportunity/create';
+  });
 }
 
 /**
@@ -213,10 +257,10 @@ function showNotification(message, type = 'info') {
   // Add to page
   document.body.appendChild(notification);
 
-  // Remove after 3 seconds
+  // Remove after 4 seconds
   setTimeout(() => {
     notification.remove();
-  }, 3000);
+  }, 4000);
 }
 
 // Export functions if using modules

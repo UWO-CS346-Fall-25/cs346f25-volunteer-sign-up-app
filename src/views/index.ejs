@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <% if (typeof error !== 'undefined') { %>
+    <div data-error id="<%= error %>"></div>
+  <% } %>
+
   <header>
     <nav>
       <div class="container">
@@ -29,6 +33,9 @@
     <section class="hero">
         <h1>Discover unique volunteer opportunities created by members of your community!</h1>
     </section>
+    <div class="create-bar">
+      <button class="btn" id="button-create">Create Opportunity</button>
+    </div>
     <div class="filter-bar">
       <p>Find an opportunity!</p>
       <div>

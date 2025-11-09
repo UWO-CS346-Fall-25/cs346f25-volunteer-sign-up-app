@@ -16,6 +16,17 @@ This website aims to simplify the process of searching for local volunteer oppor
 - Profile page for viewing account information (currently the inputs from the login/register pages) and logging out
 <img width="1365" height="592" alt="image" src="https://github.com/user-attachments/assets/62e8478e-355f-4368-a0cb-ecea7017ce03" />
 
+## Containing as of Week 10:
+
+- Proper data persistence with connection to Supabase
+- Change Password/Create Opportunity pages for managing persisting data
+- CRUD slice:
+  - CREATE Opportunity
+  - READ Opportunities (list)
+  - UPDATE Opportunities (functional, but not implemented in UI)
+  - DELETE Opportunities (functional, but not implemented in UI)
+
+Row-level security (RLS) is not yet enabled. In the future, once authentication is added, I will add proper password hashing and RLS permissions, utilizing the existing `id` column in the `users` table. Functionally, the data for RLS to work has been implemented, but the permissions have not been set up yet and it is not enabled. Once enabled, RLS would be set up to only allow authenticated users to view their own account information outside of first/last names, and they would only be able to edit their own account information. Opportunities will not let users edit them without being the user defined in the opportunity's `created_by` column.
 
 This is based on a teaching template for building web applications with:
 - **Node.js 20**: JavaScript runtime
@@ -40,6 +51,7 @@ This is based on a teaching template for building web applications with:
 │   ├── app.js              # Express app configuration
 │   ├── routes/             # Route definitions
 │   │   ├── index.js        # Main routes
+│   │   ├── opportunity.js  # Opportunity routes
 │   │   └── users.js        # User routes
 │   ├── controllers/        # Request handlers
 │   │   ├── indexController.js
@@ -47,12 +59,15 @@ This is based on a teaching template for building web applications with:
 │   │   └── userController.js
 │   ├── models/             # Database models
 │   │   ├── db.js           # Database connection
+│   │   ├── supabase.js     # Supabase connection
 │   │   ├── opportunity.js  # Opportunity model
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
 │   │   ├── users/          # EJS views for user sessions (login/logout)
 │   │   │   ├── login.ejs   # Login page
 │   │   │   └── register.ejs # Register page
+│   │   ├── opportunities/  # Opportunity views
+│   │   │   └── create.ejs  # Create page
 │   │   ├── index.ejs       # Home page
 │   │   ├── dashboard.ejs   # Dashboard page
 │   │   ├── profile.ejs     # Profile page
@@ -71,10 +86,13 @@ This is based on a teaching template for building web applications with:
 │   ├── seed.js             # Seed runner
 │   ├── reset.js            # Database reset script
 │   ├── migrations/         # Database migrations
-│   │   └── 001_create_users_table.sql
+│   │   ├── 001_create_users_table.sql
+│   │   └── 002_create_opportunities_table.sql
 │   └── seeds/              # Database seeds
-│       └── 001_seed_users.sql
+│       ├── 001_seed_users.sql
+│       └── 002_seed_opportunities.sql
 ├── docs/                   # Documentation
+│   ├── db/                 # Example database entries in SQL and CSV files
 │   ├── README.md           # This file
 │   ├── SETUP.md            # Setup instructions
 │   └── ARCHITECTURE.md     # Architecture overview
@@ -100,9 +118,6 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed architecture information.
 
 - `npm start`: Start the production server
 - `npm run dev`: Start the development server with auto-reload
-- `npm run migrate`: Run database migrations
-- `npm run seed`: Seed the database with sample data
-- `npm run reset`: Reset the database (drop all tables and re-run migrations and seeds)
 - `npm run lint`: Check code for linting errors
 - `npm run lint:fix`: Fix linting errors automatically
 - `npm run format`: Format code with Prettier
@@ -128,21 +143,21 @@ Run `npm run lint` to check for issues and `npm run format` to format your code.
 
 ### Migrations
 
-Migrations are SQL files in `db/migrations/` that create or modify database tables.
+Migrations are SQL files in `docs/db/` that create or modify database tables.
 
 To create a new migration:
-1. Create a new file: `db/migrations/00X_description.sql`
+1. Create a new file: `docs/db/schema_description.sql`
 2. Write your SQL (CREATE TABLE, ALTER TABLE, etc.)
-3. Run `npm run migrate`
+3. Run your SQL in your Supabase project
 
 ### Seeds
 
-Seeds are SQL files in `db/seeds/` that populate the database with initial or test data.
+Seeds are CSV files in `docs/db/` that populate the database with initial or test data.
 
 To create a new seed:
-1. Create a new file: `db/seeds/00X_description.sql`
-2. Write your INSERT statements
-3. Run `npm run seed`
+1. Create a new file: `docs/db/seed_description.csv`
+2. Write your sample data
+3. Import this file into your Supabase project in the corresponding table
 
 ### Parameterized Queries
 
@@ -169,5 +184,6 @@ When contributing to this project:
 - [Express.js Documentation](https://expressjs.com/)
 - [EJS Documentation](https://ejs.co/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Supabase Documentation](https://supabase.com/docs/reference/javascript)
 - [Node.js Documentation](https://nodejs.org/docs/)
 - [Helmet Documentation](https://helmetjs.github.io/)

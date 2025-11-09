@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <% if (typeof error !== 'undefined') { %>
+    <div data-error id="<%= error %>"></div>
+  <% } %>
+
   <header>
     <nav>
       <div class="container">
@@ -30,7 +34,7 @@
         <h1>Log into your account!</h1>
     </section>
     <div class="user-form">
-      <form method="POST">
+      <form method="POST" data-validate>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         
         <p>

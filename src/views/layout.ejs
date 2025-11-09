@@ -12,6 +12,10 @@
   <%- typeof head !== 'undefined' ? head : '' %>
 </head>
 <body>
+  <% if (typeof error !== 'undefined') { %>
+    <div data-error id="<%= error %>"></div>
+  <% } %>
+
   <!-- Header/Navigation -->
   <header>
     <nav>
