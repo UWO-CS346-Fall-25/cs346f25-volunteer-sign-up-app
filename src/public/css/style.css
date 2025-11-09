@@ -122,7 +122,8 @@ input {
   text-align: center;
   padding: 1rem 0;
   background: linear-gradient(135deg, var(--primary-color), var(--info-color));
-  border-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
   margin-bottom: 2rem;
 }
 
