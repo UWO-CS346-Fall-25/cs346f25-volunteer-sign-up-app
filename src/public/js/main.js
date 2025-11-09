@@ -159,6 +159,32 @@ function initInteractiveElements() {
   changePwdButton?.addEventListener('click', function (e) {
     window.location.href = '/changepassword';
   });
+
+  // Ensuring confirmed password and required password are identical
+  const confirmPwdField = document.getElementById("confirm-pwd");
+  const pwdForm = document.querySelector(".user-form form");
+
+  let pwdFieldName = 'newpassword';
+  let pwdField = document.getElementById(pwdFieldName);
+
+  if (!pwdField) {
+    pwdFieldName = 'password';
+    pwdField = document.getElementById(pwdFieldName);
+  }
+
+  pwdForm?.addEventListener("submit", function (e) {
+    if (confirmPwdField && pwdField) {
+      const data = new FormData(pwdForm);
+      const pwd1 = data.get(pwdFieldName);
+      const pwd2 = data.get("confirm-pwd");
+
+      if (pwd1 !== pwd2) {
+        // TODO: alerts
+        console.log("Passwords don't match!");
+        e.preventDefault();
+      }
+    }
+  });
 }
 
 /**
