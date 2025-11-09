@@ -104,9 +104,6 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed architecture information.
 
 - `npm start`: Start the production server
 - `npm run dev`: Start the development server with auto-reload
-- `npm run migrate`: Run database migrations
-- `npm run seed`: Seed the database with sample data
-- `npm run reset`: Reset the database (drop all tables and re-run migrations and seeds)
 - `npm run lint`: Check code for linting errors
 - `npm run lint:fix`: Fix linting errors automatically
 - `npm run format`: Format code with Prettier
@@ -132,21 +129,21 @@ Run `npm run lint` to check for issues and `npm run format` to format your code.
 
 ### Migrations
 
-Migrations are SQL files in `db/migrations/` that create or modify database tables.
+Migrations are SQL files in `docs/db/` that create or modify database tables.
 
 To create a new migration:
-1. Create a new file: `db/migrations/00X_description.sql`
+1. Create a new file: `docs/db/schema_description.sql`
 2. Write your SQL (CREATE TABLE, ALTER TABLE, etc.)
-3. Run `npm run migrate`
+3. Run your SQL in your Supabase project
 
 ### Seeds
 
-Seeds are SQL files in `db/seeds/` that populate the database with initial or test data.
+Seeds are CSV files in `docs/db/` that populate the database with initial or test data.
 
 To create a new seed:
-1. Create a new file: `db/seeds/00X_description.sql`
-2. Write your INSERT statements
-3. Run `npm run seed`
+1. Create a new file: `docs/db/seed_description.csv`
+2. Write your sample data
+3. Import this file into your Supabase project in the corresponding table
 
 ### Parameterized Queries
 
@@ -173,5 +170,6 @@ When contributing to this project:
 - [Express.js Documentation](https://expressjs.com/)
 - [EJS Documentation](https://ejs.co/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Supabase Documentation](https://supabase.com/docs/reference/javascript)
 - [Node.js Documentation](https://nodejs.org/docs/)
 - [Helmet Documentation](https://helmetjs.github.io/)
