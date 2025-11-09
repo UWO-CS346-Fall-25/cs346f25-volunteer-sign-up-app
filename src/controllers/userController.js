@@ -151,7 +151,7 @@ exports.postChangePassword = async (req, res, next) => {
     if (!user || password != user.password) {
       return res.render('profile', {
         title: 'Profile',
-        error: 'Invalid password',
+        error: 'Invalid credentials',
         csrfToken: req.csrfToken(),
         session: req.session.user,
       });

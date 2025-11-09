@@ -182,6 +182,13 @@ function initInteractiveElements() {
   changePwdButton?.addEventListener('click', function (e) {
     window.location.href = '/changepassword';
   });
+
+  // Add error detection functionality
+  const errorDiv = document.querySelector('div[data-error]');
+
+  if (errorDiv) {
+    showNotification(errorDiv.id, 'warning');
+  }
 }
 
 /**
@@ -243,10 +250,10 @@ function showNotification(message, type = 'info') {
   // Add to page
   document.body.appendChild(notification);
 
-  // Remove after 3 seconds
+  // Remove after 4 seconds
   setTimeout(() => {
     notification.remove();
-  }, 3000);
+  }, 4000);
 }
 
 // Export functions if using modules
