@@ -75,3 +75,63 @@ exports.getDashboardJoined = async (req, res, next) => {
     next(error);
   }
 }
+
+/**
+ * GET /opportunity/create
+ * Display create opportunity form
+ */
+exports.getOpportunityCreate = (req, res, next) => {
+  try {
+    if (!req.session.user) {
+      res.redirect('/login');
+    }
+
+    res.render('opportunities/create', {
+      title: 'Create Opportunity',
+      csrfToken: req.csrfToken(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * POST /opportunity/create
+ * Create new opportunity
+ */
+exports.postOpportunityCreate = async (req, res, next) => {
+  try {
+    const { title, description, zipcode, date } = req.body;
+    const startDate = new Date(date).getTime()
+    const endDate = new Date(date).getTime();
+    
+    // Create opportunity with data
+    const toCreate = new OpportunityModel(
+      null,
+      title,
+      description,
+      startDate,
+      endDate,
+      [req.session.user.id],
+      null,
+      zipcode,
+      false
+    );
+
+    const opportunity = await OpportunityModel.add(toCreate);
+
+    if (!opportunity) {
+      return res.render('opportunities/create', {
+        title: 'Create Opportunity',
+        error: 'Failed to create opportunity',
+        csrfToken: req.csrfToken(),
+        session: req.session.user,
+      });
+    }
+
+    // Redirect to home
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
+}

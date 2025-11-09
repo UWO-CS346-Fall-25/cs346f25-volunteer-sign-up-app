@@ -60,7 +60,8 @@ let opportunities = [];
 
 async function fetchOpportunities() {
   const { data, error } = await supabase.from('opportunities')
-    .select('*');
+    .select('*')
+    .limit(20);
 
   if (error) {
     console.error('Failed to fetch opportunities: ' + error.message);
@@ -129,7 +130,8 @@ Opportunity.add = async function(toAdd) {
       zip_code: toAdd.zipCode,
       created_by: createdBy,
       organizers: toAdd.organizers,
-    });
+    })
+    .select('*');
 
   if (error) {
     console.error('Failed to add opportunity: ' + error.message);

@@ -189,6 +189,13 @@ function initInteractiveElements() {
   if (errorDiv) {
     showNotification(errorDiv.id, 'warning');
   }
+
+  // Add create opportunity functionality
+  const createOpportunityButton = document.getElementById("button-create");
+
+  createOpportunityButton?.addEventListener('click', function (e) {
+    window.location.href = '/opportunity/create';
+  });
 }
 
 /**

@@ -176,6 +176,12 @@ input {
   font-size: 0.8rem;
 }
 
+/* Create bars */
+.create-bar {
+  text-align: center;
+  width: 100%;
+}
+
 /* Filter bars */
 .filter-bar {
   justify-content: space-between;
@@ -284,7 +290,7 @@ input {
   font-weight: bold;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=number] {
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date] {
   padding: 5px;
   margin: 5px;
   width: 40%;
