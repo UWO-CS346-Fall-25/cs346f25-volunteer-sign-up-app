@@ -3,13 +3,15 @@
  * 
  * A class holding all required data for an opportunity
  * and basic methods to query this data
- * 
- * TODO: Connect to a database and add methods for database operations
  */
+
+const supabase = require('./supabase');
+const User = require('./User');
 
 class Opportunity {
   /**
    * Opportunity constructor with all required data
+   * @param {string} id The UUID of this opportunity
    * @param {string} title The title of this opportunity
    * @param {string} description The description of this opportunity
    * @param {number} startDate The start date of this opportunity
@@ -20,8 +22,9 @@ class Opportunity {
    * @param {boolean} isJoined Whether this opportunity has been joined
    * TODO: Attach isJoined and instance methods to user sessions rather than global data
    */
-  constructor(title, description, startDate, endDate, organizers, image, zipCode, isJoined) {
+  constructor(id, title, description, startDate, endDate, organizers, image, zipCode, isJoined) {
     // Default values to ensure all properties are present in the class
+    this.id = id ?? null;
     this.title = title ?? '[Title]';
     this.description = description ?? '[Description]';
     this.startDate = new Date(startDate ?? Date.now());
@@ -53,78 +56,142 @@ class Opportunity {
   }
 }
 
-const opportunities = [
-  new Opportunity(
-    'Opportunity B',
-    'Very cool description',
-    8640000,
-    Date.now() + 21600000,
-    ['An organizer'],
-    '/img/zybooks_cat.jpg',
-    12345,
-    true,
-  ),
+let opportunities = [];
 
-  new Opportunity(
-    'Opportunity A',
-    'Mediocre description',
-    Date.now(),
-    Date.now() + 21600000,
-    ['Another organizer', 'That organizer'],
-    '/img/zybooks_cat.jpg',
-    12345,
-    true,
-  ),
+async function fetchOpportunities() {
+  const { data, error } = await supabase.from('opportunities')
+    .select('*');
 
-  new Opportunity(
-    'Opportunity D',
-    'Cool description',
-    34560000,
-    69120000,
-    ['A couple organizers'],
-    '/img/zybooks_cat.jpg',
-    23456,
-    true,
-  ),
+  if (error) {
+    console.error('Failed to fetch opportunities: ' + error.message);
+    return;
+  }
 
-  new Opportunity(
-    'Opportunity C',
-    'Amazing description',
-    0,
-    Date.now() - 21600000,
-    ['This organizer'],
-    '/img/zybooks_cat.jpg',
-    34567,
-    false,
-  ),
-]
+  const results = [];
+
+  for (const opportunity of data) {
+    opportunity.organizers.unshift(opportunity.created_by);
+    const organizers = [];
+    
+    for (const organizer of opportunity.organizers) {
+      organizers.push(await User.getNameById(organizer));
+    }
+
+    results.push(new Opportunity(
+      opportunity.id,
+      opportunity.title,
+      opportunity.description,
+      Date.parse(opportunity.event_begin),
+      Date.parse(opportunity.event_end),
+      organizers,
+      null,
+      opportunity.zip_code,
+      false,
+    ));
+  }
+
+  opportunities = results;
+}
+
+fetchOpportunities();
 
 /**
- * Removes an opportunity from the existing opportunity list
+ * Removes an opportunity from the database
  * @param {Opportunity} toRemove The opportunity to remove
  */
-Opportunity.remove = function(toRemove) {
-  opportunities = opportunities.filter(function(opportunity) {
-    return opportunity !== toRemove;
-  });
+Opportunity.remove = async function(toRemove) {
+  const { error } = await supabase.from('opportunities')
+    .delete()
+    .eq('id', toRemove.id);
+
+  if (error) {
+    console.error('Failed to delete opportunity with ID: ' + error.message);
+    return null;
+  }
+  
+  fetchOpportunities();
 }
 
 /**
- * Adds an opportunity to the existing opportunity list
+ * Adds an opportunity to the database
  * @param {Opportunity} toAdd The opportunity to add
+ * @returns {Promise<object>} The added opportunity
  */
-Opportunity.add = function(toAdd) {
-  opportunities.push(toAdd);
+Opportunity.add = async function(toAdd) {
+  const createdBy = toAdd.organizers.shift();
+
+  const { data, error } = await supabase.from('opportunities')
+    .insert({
+      title: toAdd.title,
+      description: toAdd.description,
+      event_begin: new Date(toAdd.startDate).toISOString(),
+      event_end: new Date(toAdd.endDate).toISOString(),
+      zip_code: toAdd.zipCode,
+      created_by: createdBy,
+      organizers: toAdd.organizers,
+    });
+
+  if (error) {
+    console.error('Failed to add opportunity: ' + error.message);
+    return null;
+  }
+
+  const result = data[0];
+  if (!result) {
+    return null;
+  }
+
+  fetchOpportunities();
+
+  toAdd.id = result.id;
+  return toAdd;
 }
 
 /**
- * Returns all currently stored opportunities
- * @returns A copy of all stored opportunities
+ * Updates an existing opportunity in the database
+ * @param {Opportunity} toUpdate The opportunity to update
+ * @param {{}} opportunityData Opportunity data to apply
+ * @returns {Promise<object>} Updated opportunity object
+ */
+Opportunity.update = async function(toUpdate, opportunityData) {
+  opportunityData.updated_at = new Date(Date.now()).toISOString();
+
+  const { data, error } = await supabase.from('opportunities')
+    .update(opportunityData)
+    .eq('id', toUpdate.id)
+    .select('*');
+
+  if (error) {
+    console.error('Failed to update opportunity: ' + error.message);
+    return null;
+  }
+
+  const opportunity = data[0];
+  if (!opportunity) {
+    return null;
+  }
+
+  fetchOpportunities();
+
+  return new Opportunity(
+    id = opportunity.id,
+    title = opportunity.title,
+    description = opportunity.description,
+    startDate = Date.parse(opportunity.event_begin),
+    endDate = Date.parse(opportunity.event_end),
+    organizers = opportunity.organizers,
+    image = null,
+    zipCode = opportunity.zip_code,
+    isJoined = false,
+  );
+}
+
+/**
+ * Returns all opportunities from the database
+ * @returns All opportunities from the database
  */
 Opportunity.getAll = function() {
-  return opportunities.filter(function() {
-    return true;
-  });
+  return opportunities;
 }
 
 /**

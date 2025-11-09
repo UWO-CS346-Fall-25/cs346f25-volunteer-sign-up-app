@@ -78,6 +78,7 @@ This is based on a teaching template for building web applications with:
 │       ├── 001_seed_users.sql
 │       └── 002_seed_opportunities.sql
 ├── docs/                   # Documentation
+│   ├── db/                 # Example database entries in SQL and CSV files
 │   ├── README.md           # This file
 │   ├── SETUP.md            # Setup instructions
 │   └── ARCHITECTURE.md     # Architecture overview

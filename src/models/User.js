@@ -52,6 +52,29 @@ class User {
   }
 
   /**
+   * Get name of user by ID
+   * @param {number} id - User ID
+   * @returns {Promise<string>} Name of user
+   */
+  static async getNameById(id) {
+    const { data, error } = await supabase.from('users')
+      .select('first_name, last_name')
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Failed to get name of user by ID: ' + error.message);
+      return null;
+    }
+
+    const result = data[0];
+    if (!result) {
+      return null;
+    }
+    
+    return result.first_name + ' ' + result.last_name;
+  }
+
+  /**
    * Find user by email (including password for authentication)
    * @param {string} email - User email
    * @returns {Promise<object|null>} User object or null
@@ -95,6 +118,8 @@ class User {
    * @returns {Promise<object>} Updated user object
    */
   static async update(id, userData) {
+    userData.updated_at = new Date(Date.now()).toISOString();
+
     const { data, error } = await supabase.from('users')
       .update(userData)
       .eq('id', id)
@@ -114,7 +139,7 @@ class User {
    * @returns {Promise<boolean>} True if deleted, false otherwise
    */
   static async delete(id) {
-    const { data, error } = supabase.from('users')
+    const { data, error } = await supabase.from('users')
       .delete()
       .eq('id', id)
       .select('id');
