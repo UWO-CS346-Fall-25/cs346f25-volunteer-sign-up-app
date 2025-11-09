@@ -152,6 +152,13 @@ function initInteractiveElements() {
   logoutButton?.addEventListener('click', function (e) {
     window.location.href = '/logout';
   });
+
+  // Add change password functionality
+  const changePwdButton = document.getElementById("change-pwd");
+
+  changePwdButton?.addEventListener('click', function (e) {
+    window.location.href = '/changepassword';
+  });
 }
 
 /**

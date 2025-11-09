@@ -95,7 +95,7 @@ class User {
    * @returns {Promise<object>} Updated user object
    */
   static async update(id, userData) {
-    const { data, error } = supabase.from('users')
+    const { data, error } = await supabase.from('users')
       .update(userData)
       .eq('id', id)
       .select('id, first_name, last_name, email, created_at, joined_events');

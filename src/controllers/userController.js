@@ -141,10 +141,11 @@ exports.getChangePassword = (req, res) => {
  */
 exports.postChangePassword = async (req, res, next) => {
   try {
-    const { email, password, newpassword } = req.body;
+    const { password, newpassword } = req.body;
+    const email = req.session.user.email;
 
     // Find user by email
-    const user = await User.findByEmail(email);
+    let user = await User.findByEmail(email);
 
     // Verify password
     if (!user || password != user.password) {
@@ -152,6 +153,7 @@ exports.postChangePassword = async (req, res, next) => {
         title: 'Profile',
         error: 'Invalid password',
         csrfToken: req.csrfToken(),
+        session: req.session.user,
       });
     }
 
@@ -164,6 +166,7 @@ exports.postChangePassword = async (req, res, next) => {
         title: 'Profile',
         error: 'Failed to update',
         csrfToken: req.csrfToken(),
+        session: req.session.user,
       });
     }
 
