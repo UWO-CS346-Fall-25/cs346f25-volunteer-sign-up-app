@@ -45,8 +45,20 @@ function initFormValidation() {
 function validateForm(form) {
   let isValid = true;
   const requiredFields = form.querySelectorAll('[required]');
+  let pwdField = null;
+  let confirmField = null;
 
   requiredFields.forEach((field) => {
+    if (field.id === 'password') {
+      pwdField ??= field;
+    }
+    if (field.id === 'newpassword') {
+      pwdField = field;
+    }
+    if (field.id === 'confirm-pwd') {
+      confirmField = field;
+    }
+
     if (!field.value.trim()) {
       showError(field, 'This field is required');
       isValid = false;
@@ -54,6 +66,16 @@ function validateForm(form) {
       clearError(field);
     }
   });
+
+  if (pwdField && confirmField) {
+    if (pwdField.value !== confirmField.value) {
+      showError(confirmField, 'Passwords do not match');
+      isValid = false;
+    }
+    else {
+      clearError(confirmField);
+    }
+  }
 
   return isValid;
 }
@@ -74,6 +96,7 @@ function showError(field, message) {
   error.style.color = 'red';
   error.style.fontSize = '0.875rem';
   error.style.marginTop = '0.25rem';
+  error.style.textAlign = 'center';
 
   // Insert after field
   field.parentNode.insertBefore(error, field.nextSibling);
@@ -158,32 +181,6 @@ function initInteractiveElements() {
 
   changePwdButton?.addEventListener('click', function (e) {
     window.location.href = '/changepassword';
-  });
-
-  // Ensuring confirmed password and required password are identical
-  const confirmPwdField = document.getElementById("confirm-pwd");
-  const pwdForm = document.querySelector(".user-form form");
-
-  let pwdFieldName = 'newpassword';
-  let pwdField = document.getElementById(pwdFieldName);
-
-  if (!pwdField) {
-    pwdFieldName = 'password';
-    pwdField = document.getElementById(pwdFieldName);
-  }
-
-  pwdForm?.addEventListener("submit", function (e) {
-    if (confirmPwdField && pwdField) {
-      const data = new FormData(pwdForm);
-      const pwd1 = data.get(pwdFieldName);
-      const pwd2 = data.get("confirm-pwd");
-
-      if (pwd1 !== pwd2) {
-        // TODO: alerts
-        console.log("Passwords don't match!");
-        e.preventDefault();
-      }
-    }
   });
 }
 
