@@ -1,0 +1,5 @@
+id,created_at,first_name,last_name,email,password,updated_at,joined_events
+0ef0b4da-4c8a-48ce-9c78-76374ed8e6d2,2025-11-09 04:06:07.622758+00,John,Doe,john@example.com,password,2025-11-09 04:06:07.622758+00,[]
+4c3865ff-13ee-4525-9b1f-18a7d8267adc,2025-11-09 04:06:07.622758+00,Jane,Smith,jane@example.com,password,2025-11-09 04:06:07.622758+00,[]
+85e8c51c-15f5-4c3d-9995-8bc3a55c0a5b,2025-11-09 04:06:07.622758+00,Admin,User,admin@example.com,password,2025-11-09 04:06:07.622758+00,[]
+e61919a1-7675-4bb5-ad18-d82d48836eb1,2025-11-08 22:39:42.756034+00,FirstName,LastName,email@example.org,abc,2025-11-08 22:39:42.756034+00,[]
