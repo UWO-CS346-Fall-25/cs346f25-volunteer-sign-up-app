@@ -16,6 +16,17 @@ This website aims to simplify the process of searching for local volunteer oppor
 - Profile page for viewing account information (currently the inputs from the login/register pages) and logging out
 <img width="1365" height="592" alt="image" src="https://github.com/user-attachments/assets/62e8478e-355f-4368-a0cb-ecea7017ce03" />
 
+## Containing as of Week 10:
+
+- Proper data persistence with connection to Supabase
+- Change Password/Create Opportunity pages for managing persisting data
+- CRUD slice:
+  - CREATE Opportunity
+  - READ Opportunities (list)
+  - UPDATE Opportunities (functional, but not implemented in UI)
+  - DELETE Opportunities (functional, but not implemented in UI)
+
+Row-level security (RLS) is not yet enabled. In the future, once authentication is added, I will add proper password hashing and RLS permissions, utilizing the existing `id` column in the `users` table. Functionally, the data for RLS to work has been implemented, but the permissions have not been set up yet and it is not enabled. Once enabled, RLS would be set up to only allow authenticated users to view their own account information outside of first/last names, and they would only be able to edit their own account information. Opportunities will not let users edit them without being the user defined in the opportunity's `created_by` column.
 
 This is based on a teaching template for building web applications with:
 - **Node.js 20**: JavaScript runtime
@@ -40,6 +51,7 @@ This is based on a teaching template for building web applications with:
 │   ├── app.js              # Express app configuration
 │   ├── routes/             # Route definitions
 │   │   ├── index.js        # Main routes
+│   │   ├── opportunity.js  # Opportunity routes
 │   │   └── users.js        # User routes
 │   ├── controllers/        # Request handlers
 │   │   ├── indexController.js
@@ -54,6 +66,8 @@ This is based on a teaching template for building web applications with:
 │   │   ├── users/          # EJS views for user sessions (login/logout)
 │   │   │   ├── login.ejs   # Login page
 │   │   │   └── register.ejs # Register page
+│   │   ├── opportunities/  # Opportunity views
+│   │   │   └── create.ejs  # Create page
 │   │   ├── index.ejs       # Home page
 │   │   ├── dashboard.ejs   # Dashboard page
 │   │   ├── profile.ejs     # Profile page
