@@ -15,6 +15,9 @@
     <nav>
       <div class="container">
         <a href="/" class="logo">Volunteer Sign-up</a>
+        <% if (typeof session !== 'undefined') { %>
+          <p>Welcome back, <%= session.firstName %>!</p>
+        <% } %>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
