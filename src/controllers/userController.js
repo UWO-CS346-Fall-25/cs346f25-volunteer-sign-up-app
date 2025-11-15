@@ -10,6 +10,7 @@
 
 // Import models
 const User = require('../models/User');
+const Opportunity = require('../models/Opportunity');
 // Import bcrypt for password hashing
 const bcrypt = require('bcrypt');
 
@@ -144,6 +145,16 @@ exports.getChangePassword = (req, res) => {
  */
 exports.postChangePassword = async (req, res, next) => {
   try {
+    if (!req.session || !req.session.user) {
+      return res.render('index', {
+        title: 'Home',
+        error: 'Not logged in',
+        csrfToken: req.csrfToken(),
+        opportunities: Opportunity.getAll(),
+        session: req.session.user,
+      });
+    }
+
     const { password, newpassword } = req.body;
     const email = req.session.user.email;
 
@@ -152,8 +163,8 @@ exports.postChangePassword = async (req, res, next) => {
 
     // Verify password
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.render('profile', {
-        title: 'Profile',
+      return res.render('users/changepassword', {
+        title: 'Change Password',
         error: 'Invalid credentials',
         csrfToken: req.csrfToken(),
         session: req.session.user,

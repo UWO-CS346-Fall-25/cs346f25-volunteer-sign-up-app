@@ -13,7 +13,7 @@
 
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
-const OpportunityModel = require('../models/Opportunity');
+const Opportunity = require('../models/Opportunity');
 
 /**
  * GET /
@@ -28,7 +28,7 @@ exports.getHome = async (req, res, next) => {
       title: 'Home',
       // data: data,
       csrfToken: req.csrfToken(),
-      opportunities: OpportunityModel.getAll(),
+      opportunities: Opportunity.getAll(),
       session: req.session.user,
     });
   } catch (error) {
@@ -49,10 +49,10 @@ exports.getDashboard = async (req, res, next) => {
     res.render('dashboard', {
       title: 'Dashboard',
       csrfToken: req.csrfToken(),
-      upcoming: OpportunityModel.getJoined().filter(function(opportunity) {
+      upcoming: Opportunity.getJoined().filter(function(opportunity) {
         return !opportunity.isExpired();
       }),
-      expired: OpportunityModel.getJoined().filter(function(opportunity) {
+      expired: Opportunity.getJoined().filter(function(opportunity) {
         return opportunity.isExpired();
       }),
       session: req.session.user,
