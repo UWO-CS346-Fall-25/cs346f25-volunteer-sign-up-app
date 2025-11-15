@@ -146,13 +146,8 @@ exports.getChangePassword = (req, res) => {
 exports.postChangePassword = async (req, res, next) => {
   try {
     if (!req.session || !req.session.user) {
-      return res.render('index', {
-        title: 'Home',
-        error: 'Not logged in',
-        csrfToken: req.csrfToken(),
-        opportunities: Opportunity.getAll(),
-        session: req.session.user,
-      });
+      res.redirect('/');
+      return;
     }
 
     const { password, newpassword } = req.body;
