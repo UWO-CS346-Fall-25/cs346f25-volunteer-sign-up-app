@@ -13,7 +13,8 @@
 
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
-const OpportunityModel = require('../models/Opportunity');
+const Opportunity = require('../models/Opportunity');
+const User = require('../models/User');
 
 /**
  * GET /
@@ -28,7 +29,7 @@ exports.getHome = async (req, res, next) => {
       title: 'Home',
       // data: data,
       csrfToken: req.csrfToken(),
-      opportunities: OpportunityModel.getAll(),
+      opportunities: Opportunity.getAll(),
       session: req.session.user,
     });
   } catch (error) {
@@ -44,17 +45,38 @@ exports.getDashboard = async (req, res, next) => {
   try {
     if (!req.session.user) {
       res.redirect('/login');
+      return;
+    }
+
+    const user = await User.findById(req.session.user.id);
+    if (!user || !user.joined_events) {
+      res.redirect('/');
+      return;
+    }
+
+    const opportunities = Opportunity.getAll().filter(function(opportunity) {
+      return user.joined_events.includes(opportunity.id);
+    });
+    
+    let upcoming = opportunities.filter(function(opportunity) {
+      return !opportunity.isExpired();
+    });
+    let expired = opportunities.filter(function(opportunity) {
+      return opportunity.isExpired();
+    });
+
+    if (req.query.sortupcoming) {
+      upcoming = Opportunity.getSorted(req.query.sortupcoming === 'true', upcoming);
+    }
+    if (req.query.sortexpired) {
+      expired = Opportunity.getSorted(req.query.sortexpired === 'true', expired);
     }
 
     res.render('dashboard', {
       title: 'Dashboard',
       csrfToken: req.csrfToken(),
-      upcoming: OpportunityModel.getJoined().filter(function(opportunity) {
-        return !opportunity.isExpired();
-      }),
-      expired: OpportunityModel.getJoined().filter(function(opportunity) {
-        return opportunity.isExpired();
-      }),
+      upcoming: upcoming,
+      expired: expired,
       session: req.session.user,
     });
   } catch (error) {

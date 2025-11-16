@@ -28,6 +28,13 @@ Based on a teaching template for building secure web applications with Node.js, 
 
 Row-level security (RLS) is not yet enabled. In the future, once authentication is added, I will add proper password hashing and RLS permissions, utilizing the existing `id` column in the `users` table. Functionally, the data for RLS to work has been implemented, but the permissions have not been set up yet and it is not enabled. Once enabled, RLS would be set up to only allow authenticated users to view their own account information outside of first/last names, and they would only be able to edit their own account information. Opportunities will not let users edit them without being the user defined in the opportunity's `created_by` column.
 
+## As of Week 11:
+
+- Password hashing
+- Joining/leaving opportunities
+- "Welcome back" indicator in homepage
+
+RLS has not yet been enabled, due to it requiring significant refactoring of how user data is managed. It may be added in the future, depending on what time allows, but having bcrypt hashing alongside user sessions and secure cookies should be reasonably adequate for the time being (though not exemplary) given the anonymous key for Supabase is not shared.
 
 ## Features
 

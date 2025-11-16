@@ -15,21 +15,22 @@
 
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
-const OpportunityModel = require('../models/Opportunity');
+const Opportunity = require('../models/Opportunity');
+const User = require('../models/User');
 
 /**
  * GET /filter
  * Display the home page with filtered opportunities
  */
 exports.getFilteredHome = async (req, res, next) => {
-  let opportunities = OpportunityModel.getAll();
+  let opportunities = Opportunity.getAll();
 
   if (req.query.zipcode) {
-    opportunities = OpportunityModel.getFiltered(req.query.zipcode, opportunities);
+    opportunities = Opportunity.getFiltered(req.query.zipcode, opportunities);
   }
 
   if (req.query.sort) {
-    opportunities = OpportunityModel.getSorted(req.query.sort === 'true', opportunities);
+    opportunities = Opportunity.getSorted(req.query.sort === 'true', opportunities);
   }
 
   try {
@@ -44,39 +45,6 @@ exports.getFilteredHome = async (req, res, next) => {
 }
 
 /**
- * GET /dashboard/joined
- * Display the user dashboard with joined opportunities
- */
-exports.getDashboardJoined = async (req, res, next) => {
-  let opportunities = OpportunityModel.getJoined();
-  let upcoming = opportunities.filter(function(opportunity) {
-    return !opportunity.isExpired();
-  });
-  let expired = opportunities.filter(function(opportunity) {
-    return opportunity.isExpired();
-  });
-
-  if (req.query.sortupcoming) {
-    upcoming = OpportunityModel.getSorted(req.query.sortupcoming === 'true', upcoming);
-  }
-
-  if (req.query.sortexpired) {
-    expired = OpportunityModel.getSorted(req.query.sortexpired === 'true', expired);
-  }
-
-  try {
-    res.render('dashboard', {
-      title: 'Dashboard',
-      csrfToken: req.csrfToken(),
-      upcoming: upcoming,
-      expired: expired,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
-/**
  * GET /opportunity/create
  * Display create opportunity form
  */
@@ -84,6 +52,7 @@ exports.getOpportunityCreate = (req, res, next) => {
   try {
     if (!req.session.user) {
       res.redirect('/login');
+      return;
     }
 
     res.render('opportunities/create', {
@@ -101,12 +70,17 @@ exports.getOpportunityCreate = (req, res, next) => {
  */
 exports.postOpportunityCreate = async (req, res, next) => {
   try {
+    if (!req.session.user) {
+      res.redirect('/login');
+      return;
+    }
+
     const { title, description, zipcode, date } = req.body;
     const startDate = new Date(date).getTime()
     const endDate = new Date(date).getTime();
     
     // Create opportunity with data
-    const toCreate = new OpportunityModel(
+    const toCreate = new Opportunity(
       null,
       title,
       description,
@@ -118,7 +92,7 @@ exports.postOpportunityCreate = async (req, res, next) => {
       false
     );
 
-    const opportunity = await OpportunityModel.add(toCreate);
+    const opportunity = await Opportunity.add(toCreate);
 
     if (!opportunity) {
       return res.render('opportunities/create', {
@@ -135,3 +109,64 @@ exports.postOpportunityCreate = async (req, res, next) => {
     next(error);
   }
 }
+
+/**
+ * GET /opportunity/join
+ * Join an opportunity
+ */
+exports.getOpportunityJoin = async (req, res, next) => {
+  try {
+    if (!req.session.user) {
+      res.redirect('/login');
+      return;
+    }
+
+    if (req.query.id) {
+      const user = await User.findById(req.session.user.id);
+
+      if (user && user.joined_events && !user.joined_events.includes(req.query.id)) {
+        user.joined_events.push(req.query.id);
+        await User.update(user.id, {
+          joined_events: user.joined_events
+        });
+      }
+    }
+
+    // Redirect to home
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * GET /opportunity/leave
+ * Leave an opportunity
+ */
+exports.getOpportunityLeave = async (req, res, next) => {
+  try {
+    if (!req.session.user) {
+      res.redirect('/login');
+      return;
+    }
+
+    if (req.query.id) {
+      const user = await User.findById(req.session.user.id);
+
+      if (user && user.joined_events && user.joined_events.includes(req.query.id)) {
+        const joined = user.joined_events.filter(function(opportunityId) {
+          return opportunityId !== req.query.id;
+        });
+
+        await User.update(user.id, {
+          joined_events: joined
+        });
+      }
+    }
+
+    // Redirect to dashboard
+    res.redirect('/dashboard');
+  } catch (error) {
+    next(error);
+  }
+};
