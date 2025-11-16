@@ -202,7 +202,7 @@ function initInteractiveElements() {
 
   for (const button of joinOpportunityButtons) {
     button.addEventListener('click', function (e) {
-      window.location.href = `/join?id=${button.id}`;
+      window.location.href = `/opportunity/join?id=${button.id}`;
     });
   }
 }

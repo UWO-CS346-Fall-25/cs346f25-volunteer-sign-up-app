@@ -23,6 +23,6 @@ const opportunityController = require('../controllers/opportunityController');
 // Define routes
 router.get('/opportunity/create', opportunityController.getOpportunityCreate);
 router.post('/opportunity/create', opportunityController.postOpportunityCreate);
-router.get('/join', opportunityController.getOpportunityJoin);
+router.get('/opportunity/join', opportunityController.getOpportunityJoin);
 
 module.exports = router;
