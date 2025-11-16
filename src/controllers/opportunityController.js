@@ -126,7 +126,7 @@ exports.getOpportunityJoin = async (req, res, next) => {
 
       if (user && user.joined_events && !user.joined_events.includes(req.query.id)) {
         user.joined_events.push(req.query.id);
-        User.update(user.id, {
+        await User.update(user.id, {
           joined_events: user.joined_events
         });
       }
@@ -154,11 +154,11 @@ exports.getOpportunityLeave = async (req, res, next) => {
       const user = await User.findById(req.session.user.id);
 
       if (user && user.joined_events && user.joined_events.includes(req.query.id)) {
-        const joined = user.joined_events.filter(function(opportunity) {
-          return opportunity.id !== req.query.id;
+        const joined = user.joined_events.filter(function(opportunityId) {
+          return opportunityId !== req.query.id;
         });
 
-        User.update(user.id, {
+        await User.update(user.id, {
           joined_events: joined
         });
       }

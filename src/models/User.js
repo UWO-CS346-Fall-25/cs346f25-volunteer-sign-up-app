@@ -130,8 +130,6 @@ class User {
       return null;
     }
 
-    console.dir(data);
-
     return data[0] || null;
   }
 

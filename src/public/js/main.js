@@ -205,6 +205,15 @@ function initInteractiveElements() {
       window.location.href = `/opportunity/join?id=${button.id}`;
     });
   }
+
+  // Add leave opportunity functionality
+  const leaveOpportunityButtons = document.getElementsByClassName("td-leave");
+
+  for (const button of leaveOpportunityButtons) {
+    button.addEventListener('click', function (e) {
+      window.location.href = `/opportunity/leave?id=${button.id}`;
+    });
+  }
 }
 
 /**
