@@ -196,6 +196,15 @@ function initInteractiveElements() {
   createOpportunityButton?.addEventListener('click', function (e) {
     window.location.href = '/opportunity/create';
   });
+
+  // Add join opportunity functionality
+  const joinOpportunityButtons = document.getElementsByClassName("td-join");
+
+  for (const button of joinOpportunityButtons) {
+    button.addEventListener('click', function (e) {
+      window.location.href = `/join?id=${button.id}`;
+    });
+  }
 }
 
 /**

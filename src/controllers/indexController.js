@@ -14,6 +14,7 @@
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
 const Opportunity = require('../models/Opportunity');
+const User = require('../models/User');
 
 /**
  * GET /
@@ -44,15 +45,26 @@ exports.getDashboard = async (req, res, next) => {
   try {
     if (!req.session.user) {
       res.redirect('/login');
+      return;
     }
+
+    const user = await User.findById(req.session.user.id);
+    if (!user || !user.joined_events) {
+      res.redirect('/');
+      return;
+    }
+
+    const opportunities = Opportunity.getAll().filter(function(opportunity) {
+      return user.joined_events.includes(opportunity.id);
+    });
 
     res.render('dashboard', {
       title: 'Dashboard',
       csrfToken: req.csrfToken(),
-      upcoming: Opportunity.getJoined().filter(function(opportunity) {
+      upcoming: opportunities.filter(function(opportunity) {
         return !opportunity.isExpired();
       }),
-      expired: Opportunity.getJoined().filter(function(opportunity) {
+      expired: opportunities.filter(function(opportunity) {
         return opportunity.isExpired();
       }),
       session: req.session.user,

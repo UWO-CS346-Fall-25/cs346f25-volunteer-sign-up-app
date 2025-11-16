@@ -15,21 +15,22 @@
 
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
-const OpportunityModel = require('../models/Opportunity');
+const Opportunity = require('../models/Opportunity');
+const User = require('../models/User');
 
 /**
  * GET /filter
  * Display the home page with filtered opportunities
  */
 exports.getFilteredHome = async (req, res, next) => {
-  let opportunities = OpportunityModel.getAll();
+  let opportunities = Opportunity.getAll();
 
   if (req.query.zipcode) {
-    opportunities = OpportunityModel.getFiltered(req.query.zipcode, opportunities);
+    opportunities = Opportunity.getFiltered(req.query.zipcode, opportunities);
   }
 
   if (req.query.sort) {
-    opportunities = OpportunityModel.getSorted(req.query.sort === 'true', opportunities);
+    opportunities = Opportunity.getSorted(req.query.sort === 'true', opportunities);
   }
 
   try {
@@ -48,7 +49,7 @@ exports.getFilteredHome = async (req, res, next) => {
  * Display the user dashboard with joined opportunities
  */
 exports.getDashboardJoined = async (req, res, next) => {
-  let opportunities = OpportunityModel.getJoined();
+  let opportunities = Opportunity.getJoined();
   let upcoming = opportunities.filter(function(opportunity) {
     return !opportunity.isExpired();
   });
@@ -57,11 +58,11 @@ exports.getDashboardJoined = async (req, res, next) => {
   });
 
   if (req.query.sortupcoming) {
-    upcoming = OpportunityModel.getSorted(req.query.sortupcoming === 'true', upcoming);
+    upcoming = Opportunity.getSorted(req.query.sortupcoming === 'true', upcoming);
   }
 
   if (req.query.sortexpired) {
-    expired = OpportunityModel.getSorted(req.query.sortexpired === 'true', expired);
+    expired = Opportunity.getSorted(req.query.sortexpired === 'true', expired);
   }
 
   try {
@@ -106,7 +107,7 @@ exports.postOpportunityCreate = async (req, res, next) => {
     const endDate = new Date(date).getTime();
     
     // Create opportunity with data
-    const toCreate = new OpportunityModel(
+    const toCreate = new Opportunity(
       null,
       title,
       description,
@@ -118,7 +119,7 @@ exports.postOpportunityCreate = async (req, res, next) => {
       false
     );
 
-    const opportunity = await OpportunityModel.add(toCreate);
+    const opportunity = await Opportunity.add(toCreate);
 
     if (!opportunity) {
       return res.render('opportunities/create', {
@@ -135,3 +136,32 @@ exports.postOpportunityCreate = async (req, res, next) => {
     next(error);
   }
 }
+
+/**
+ * GET /join
+ * Join an opportunity
+ */
+exports.getOpportunityJoin = async (req, res, next) => {
+  try {
+    if (!req.session.user) {
+      res.redirect('/login');
+      return;
+    }
+
+    if (req.query.id) {
+      const user = await User.findById(req.session.user.id);
+
+      if (user && user.joined_events && !user.joined_events.includes(req.query.id)) {
+        user.joined_events.push(req.query.id);
+        User.update(user.id, {
+          joined_events: user.joined_events
+        });
+      }
+    }
+
+    // Redirect to home
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
+};
