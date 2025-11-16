@@ -57,16 +57,26 @@ exports.getDashboard = async (req, res, next) => {
     const opportunities = Opportunity.getAll().filter(function(opportunity) {
       return user.joined_events.includes(opportunity.id);
     });
+    
+    let upcoming = opportunities.filter(function(opportunity) {
+      return !opportunity.isExpired();
+    });
+    let expired = opportunities.filter(function(opportunity) {
+      return opportunity.isExpired();
+    });
+
+    if (req.query.sortupcoming) {
+      upcoming = Opportunity.getSorted(req.query.sortupcoming === 'true', upcoming);
+    }
+    if (req.query.sortexpired) {
+      expired = Opportunity.getSorted(req.query.sortexpired === 'true', expired);
+    }
 
     res.render('dashboard', {
       title: 'Dashboard',
       csrfToken: req.csrfToken(),
-      upcoming: opportunities.filter(function(opportunity) {
-        return !opportunity.isExpired();
-      }),
-      expired: opportunities.filter(function(opportunity) {
-        return opportunity.isExpired();
-      }),
+      upcoming: upcoming,
+      expired: expired,
       session: req.session.user,
     });
   } catch (error) {

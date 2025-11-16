@@ -160,13 +160,13 @@ function initInteractiveElements() {
   sortUpcomingBtn?.addEventListener('click', function (e) {
     sortUpcoming ^= true;
     const query = sortUpcoming ? '?sortupcoming=true' : '';
-    window.location.href = `/dashboard/joined${query}`;
+    window.location.href = `/dashboard${query}`;
   });
 
   sortExpiredBtn?.addEventListener('click', function (e) {
     sortExpired ^= true;
     const query = sortExpired ? '?sortexpired=true' : '';
-    window.location.href = `/dashboard/joined${query}`;
+    window.location.href = `/dashboard${query}`;
   });
 
   // Add log out functionality

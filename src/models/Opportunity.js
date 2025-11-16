@@ -197,26 +197,6 @@ Opportunity.getAll = function() {
 }
 
 /**
- * Returns all opportunities which have been joined
- * @returns An array of joined opportunities
- */
-Opportunity.getJoined = function() {
-  return opportunities.filter(function(opportunity) {
-    return opportunity.isJoined;
-  });
-}
-
-/**
- * Returns all opportunities which have not been joined
- * @returns An array of not joined opportunities
- */
-Opportunity.getNotJoined = function() {
-  return opportunities.filter(function(opportunity) {
-    return !opportunity.isJoined;
-  });
-}
-
-/**
  * Sorts all opportunities by their title
  * @param {boolean} ascending Whether to sort the array in ascending order
  * @param {[Opportunity]?} toSort An optional array of opportunities to sort
