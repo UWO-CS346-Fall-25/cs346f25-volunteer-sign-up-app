@@ -18,10 +18,12 @@ const express = require('express');
 const router = express.Router();
 
 // Import controllers
-const userController = require('../controllers/opportunityController');
+const opportunityController = require('../controllers/opportunityController');
 
 // Define routes
-router.get('/opportunity/create', userController.getOpportunityCreate);
-router.post('/opportunity/create', userController.postOpportunityCreate);
+router.get('/opportunity/create', opportunityController.getOpportunityCreate);
+router.post('/opportunity/create', opportunityController.postOpportunityCreate);
+router.get('/opportunity/join', opportunityController.getOpportunityJoin);
+router.get('/opportunity/leave', opportunityController.getOpportunityLeave);
 
 module.exports = router;

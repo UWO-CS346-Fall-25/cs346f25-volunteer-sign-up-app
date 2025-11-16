@@ -10,6 +10,9 @@
 
 // Import models
 const User = require('../models/User');
+const Opportunity = require('../models/Opportunity');
+// Import bcrypt for password hashing
+const bcrypt = require('bcrypt');
 
 /**
  * GET /register
@@ -30,10 +33,11 @@ exports.postRegister = async (req, res, next) => {
   try {
     const { firstname, lastname, email, password } = req.body;
 
-    // Validate input
     // Hash password
+    const hash = await bcrypt.hash(password, 10);
+    
     // Create user in database
-    const user = await User.create({ firstname, lastname, email, password });
+    const user = await User.create({ firstname, lastname, email, password: hash });
     if (!user) {
       // TODO: log error
       res.redirect('/register');
@@ -83,7 +87,7 @@ exports.postLogin = async (req, res, next) => {
     const user = await User.findByEmail(email);
 
     // Verify password
-    if (!user || password != user.password) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.render('users/login', {
         title: 'Login',
         error: 'Invalid credentials',
@@ -141,6 +145,11 @@ exports.getChangePassword = (req, res) => {
  */
 exports.postChangePassword = async (req, res, next) => {
   try {
+    if (!req.session || !req.session.user) {
+      res.redirect('/');
+      return;
+    }
+
     const { password, newpassword } = req.body;
     const email = req.session.user.email;
 
@@ -148,17 +157,20 @@ exports.postChangePassword = async (req, res, next) => {
     let user = await User.findByEmail(email);
 
     // Verify password
-    if (!user || password != user.password) {
-      return res.render('profile', {
-        title: 'Profile',
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.render('users/changepassword', {
+        title: 'Change Password',
         error: 'Invalid credentials',
         csrfToken: req.csrfToken(),
         session: req.session.user,
       });
     }
 
+    // Hash new password
+    const hash = await bcrypt.hash(newpassword, 10);
+
     user = await User.update(user.id, {
-      password: newpassword
+      password: hash
     });
 
     if (!user) {

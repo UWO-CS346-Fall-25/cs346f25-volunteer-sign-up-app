@@ -160,13 +160,13 @@ function initInteractiveElements() {
   sortUpcomingBtn?.addEventListener('click', function (e) {
     sortUpcoming ^= true;
     const query = sortUpcoming ? '?sortupcoming=true' : '';
-    window.location.href = `/dashboard/joined${query}`;
+    window.location.href = `/dashboard${query}`;
   });
 
   sortExpiredBtn?.addEventListener('click', function (e) {
     sortExpired ^= true;
     const query = sortExpired ? '?sortexpired=true' : '';
-    window.location.href = `/dashboard/joined${query}`;
+    window.location.href = `/dashboard${query}`;
   });
 
   // Add log out functionality
@@ -196,6 +196,24 @@ function initInteractiveElements() {
   createOpportunityButton?.addEventListener('click', function (e) {
     window.location.href = '/opportunity/create';
   });
+
+  // Add join opportunity functionality
+  const joinOpportunityButtons = document.getElementsByClassName("td-join");
+
+  for (const button of joinOpportunityButtons) {
+    button.addEventListener('click', function (e) {
+      window.location.href = `/opportunity/join?id=${button.id}`;
+    });
+  }
+
+  // Add leave opportunity functionality
+  const leaveOpportunityButtons = document.getElementsByClassName("td-leave");
+
+  for (const button of leaveOpportunityButtons) {
+    button.addEventListener('click', function (e) {
+      window.location.href = `/opportunity/leave?id=${button.id}`;
+    });
+  }
 }
 
 /**

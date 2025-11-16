@@ -50,7 +50,7 @@
           <li>
             <table>
               <tr>
-                <td rowspan="4">
+                <td rowspan="3">
                   <img class="td-image"
                     alt="Opportunity Picture"
                     src="<%= opportunity.image %>">
@@ -64,6 +64,7 @@
               </tr>
               <tr></tr>
               <tr>
+                <td class="td-leave" id="<%= opportunity.id %>"><button class="btn">Leave Opportunity</button></td>
                 <td colspan="3" class="td-organizers"><%= opportunity.organizers.join(', ') %></td>
                 <td class="td-zip">Zip Code: <%= opportunity.zipCode %></td>
               </tr>
@@ -85,7 +86,7 @@
           <li>
             <table>
               <tr>
-                <td rowspan="4">
+                <td rowspan="3">
                   <img class="td-image"
                     alt="Opportunity Picture"
                     src="<%= opportunity.image %>">
@@ -99,6 +100,7 @@
               </tr>
               <tr></tr>
               <tr>
+                <td class="td-leave" id="<%= opportunity.id %>"><button class="btn">Leave Opportunity</button></td>
                 <td colspan="3" class="td-organizers"><%= opportunity.organizers.join(', ') %></td>
                 <td class="td-zip">Zip Code: <%= opportunity.zipCode %></td>
               </tr>
