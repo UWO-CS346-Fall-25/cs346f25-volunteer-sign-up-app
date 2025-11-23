@@ -36,6 +36,21 @@ Row-level security (RLS) is not yet enabled. In the future, once authentication 
 
 RLS has not yet been enabled, due to it requiring significant refactoring of how user data is managed. It may be added in the future, depending on what time allows, but having bcrypt hashing alongside user sessions and secure cookies should be reasonably adequate for the time being (though not exemplary) given the anonymous key for Supabase is not shared.
 
+## Containing as of Week 12:
+
+- Statistics page fetching data from the US Census API
+Docs:
+- https://api.census.gov/data/2023/cps/volunteer/sep/variables.html
+- https://www.census.gov/data/developers/guidance/api-user-guide.html
+Using the endpoint:
+- https://api.census.gov/data/2023/cps/volunteer/sep
+
+When the Statistics page is first opened, API requests are sent by the server to this endpoint to fetch statistics on volunteering in the US, conducted by the US Census in September 2023. This response is then cached and reused for future requests. These results are then processed by the server and rendered to the client.
+
+No API keys are necessary for this API. Only the URL is required for a request.
+
+<img width="1365" height="570" alt="image" src="https://github.com/user-attachments/assets/06feddbe-61eb-4355-a5f7-e96bed13f57a" />
+
 This is based on a teaching template for building web applications with:
 - **Node.js 20**: JavaScript runtime
 - **Express 4**: Web application framework
@@ -60,15 +75,18 @@ This is based on a teaching template for building web applications with:
 │   ├── routes/             # Route definitions
 │   │   ├── index.js        # Main routes
 │   │   ├── opportunity.js  # Opportunity routes
+│   │   ├── statistics.js   # Statistics routes
 │   │   └── users.js        # User routes
 │   ├── controllers/        # Request handlers
 │   │   ├── indexController.js
 │   │   ├── opportunityController.js
+│   │   ├── statisticsController.js
 │   │   └── userController.js
 │   ├── models/             # Database models
 │   │   ├── db.js           # Database connection
 │   │   ├── supabase.js     # Supabase connection
-│   │   ├── opportunity.js  # Opportunity model
+│   │   ├── Opportunity.js  # Opportunity model
+│   │   ├── Statistics.js   # Statistics model
 │   │   └── User.js         # User model
 │   ├── views/              # EJS templates
 │   │   ├── users/          # EJS views for user sessions (login/logout)
@@ -79,6 +97,7 @@ This is based on a teaching template for building web applications with:
 │   │   ├── index.ejs       # Home page
 │   │   ├── dashboard.ejs   # Dashboard page
 │   │   ├── profile.ejs     # Profile page
+│   │   ├── statistics.ejs  # Statistics page
 │   │   ├── error.ejs       # Error page
 │   │   └── layout.ejs      # Layout template (optional)
 │   └── public/             # Static files
@@ -195,3 +214,5 @@ When contributing to this project:
 - [Supabase Documentation](https://supabase.com/docs/reference/javascript)
 - [Node.js Documentation](https://nodejs.org/docs/)
 - [Helmet Documentation](https://helmetjs.github.io/)
+- [Census API Documentation](https://www.census.gov/data/developers/guidance/api-user-guide.html)
+- [Census Volunteer API Options](https://api.census.gov/data/2023/cps/volunteer/sep/variables.html)

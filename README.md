@@ -36,6 +36,21 @@ Row-level security (RLS) is not yet enabled. In the future, once authentication 
 
 RLS has not yet been enabled, due to it requiring significant refactoring of how user data is managed. It may be added in the future, depending on what time allows, but having bcrypt hashing alongside user sessions and secure cookies should be reasonably adequate for the time being (though not exemplary) given the anonymous key for Supabase is not shared.
 
+## As of Week 12:
+
+- Statistics page fetching data from the US Census API
+Docs:
+- https://api.census.gov/data/2023/cps/volunteer/sep/variables.html
+- https://www.census.gov/data/developers/guidance/api-user-guide.html
+Using the endpoint:
+- https://api.census.gov/data/2023/cps/volunteer/sep
+
+When the Statistics page is first opened, API requests are sent by the server to this endpoint to fetch statistics on volunteering in the US, conducted by the US Census in September 2023. This response is then cached and reused for future requests. These results are then processed by the server and rendered to the client.
+
+No API keys are necessary for this API. Only the URL is required for a request.
+
+<img width="1365" height="570" alt="image" src="https://github.com/user-attachments/assets/06feddbe-61eb-4355-a5f7-e96bed13f57a" />
+
 ## Features
 
 - 🚀 **Node.js 20** + **Express 4** - Modern JavaScript backend
