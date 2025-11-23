@@ -258,11 +258,30 @@ input {
   background-color: var(--dark-danger-color);
 }
 
-/* Login/Register pages */
+/* Login/Register/Statistics pages */
 
-.user-form {
+.statistics, .user-form {
   padding: 5vw 15vw;
 }
+
+/* Statistic page */
+.statistics ul {
+  background-color: var(--primary-light-color);
+  border: 5px solid var(--primary-color);
+  border-radius: 10px;
+  list-style: none;
+}
+
+.statistics h2, .statistics h3, .statistics li {
+  color: var(--dark-color);
+  text-shadow: none;
+}
+
+.statistics h3 {
+  font-size: xx-small;
+}
+
+/* Login/Register pages */
 
 .user-form form {
   background-color: var(--primary-light-color);

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Volunteer Sign-up</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% if (typeof error !== 'undefined') { %>
+    <div data-error id="<%= error %>"></div>
+  <% } %>
+
+  <header>
+    <nav>
+      <div class="container">
+        <a href="/" class="logo">Volunteer Sign-up</a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/profile">
+            <img id="header_pfp"
+              alt="Profile"
+              src="/img/default_pfp.svg"
+              width="30">
+          </a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Did you know?</h1>
+    </section>
+    <div class="statistics">
+      <ul>
+        <h2>U.S. Census: September 2023 Volunteer Statistics</h2>
+        <h3>(Percentages are approximate)</h3>
+        <li><%= (volunteerFreq * 100).toFixed(1) %>% answered 'Yes' to being a volunteer!</li>
+        <li><%= (childrenActFreq * 100).toFixed(1) %>% of volunteers answered 'Yes' to helping with children's activities!</li>
+        <li><%= (onlineFreq * 100).toFixed(1) %>% of volunteer work is done online!</li>
+        <li>Volunteers spend, on average, <%= avgHours.toFixed(1) %> hours volunteering!</li>
+        <li>Meanwhile, the median number of hours volunteered is <%= medHours %> hours!</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Volunteer Sign-up. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

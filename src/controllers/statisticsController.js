@@ -26,11 +26,11 @@ exports.getStatistics = async (req, res, next) => {
     res.render('statistics', {
       title: 'Statistics',
       csrfToken: req.csrfToken(),
-      volunteerFreq: Statistics.getVolunteerFrequency(),
-      childrenActFreq: Statistics.getVolunteerChildrensActivityFrequency(),
-      onlineFreq: Statistics.getVolunteerOnlineFrequency(),
-      avgHours: Statistics.getAverageVolunteerHours(),
-      medHours: Statistics.getMedianVolunteerHours(),
+      volunteerFreq: await Statistics.getVolunteerFrequency(),
+      childrenActFreq: await Statistics.getVolunteerChildrensActivityFrequency(),
+      onlineFreq: await Statistics.getVolunteerOnlineFrequency(),
+      avgHours: await Statistics.getAverageVolunteerHours(),
+      medHours: await Statistics.getMedianVolunteerHours(),
     });
   } catch (error) {
     next(error);

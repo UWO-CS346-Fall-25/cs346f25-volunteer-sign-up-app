@@ -1,7 +1,7 @@
 /**
  * Statistics Model
  *
- * This model handles API requests for US Census Bureau data
+ * This model handles API requests for US Census data
  * for volunteer work collected in September 2023
  *
  * Note: Only collecting 'Yes' / 'No' answers for the sake of cleaner data
@@ -65,7 +65,7 @@ async function fetchData(dataKey) {
 class Statistics {
   // Get the number of responders who have volunteered as a proportion
   static async getVolunteerFrequency() {
-    let data = fetchData('PES16');
+    let data = await fetchData('PES16');
     // 1: Yes
     let numVolunteers = data['1'] ?? 0;
     // 2: No
@@ -82,7 +82,7 @@ class Statistics {
   // Get the number of responders who volunteer to work with children
   // as a proportion relative to the number of volunteer responders
   static async getVolunteerChildrensActivityFrequency() {
-    let data = fetchData('PES16A');
+    let data = await fetchData('PES16A');
     // 1: Yes
     let numChildrensActivityVolunteers = data['1'] ?? 0;
     // 2: No
@@ -99,7 +99,7 @@ class Statistics {
   // Get the number of responders who volunteer for online work
   // as a proportion relative to the number of volunteer responders
   static async getVolunteerOnlineFrequency() {
-    let data = fetchData('PES16F');
+    let data = await fetchData('PES16F');
     let numVolunteers = 0;
     let onlineScore = 0;
     // 1: All in-person
@@ -127,7 +127,7 @@ class Statistics {
 
   // Get the average number of hours a volunteer works for
   static async getAverageVolunteerHours() {
-    let data = fetchData('PTS16E');
+    let data = await fetchData('PTS16E');
     let sumHours = 0;
     let numVolunteers = 0;
 
@@ -147,7 +147,7 @@ class Statistics {
 
   // Get the median number of hours a volunteer works for
   static async getMedianVolunteerHours() {
-    let data = fetchData('PTS16E');
+    let data = await fetchData('PTS16E');
     let numVolunteers = 0;
 
     // Hour range: [1,500]
