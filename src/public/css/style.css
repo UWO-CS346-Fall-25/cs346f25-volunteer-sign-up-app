@@ -266,6 +266,7 @@ input {
 
 /* Statistic page */
 .statistics ul {
+  text-align: center;
   background-color: var(--primary-light-color);
   border: 5px solid var(--primary-color);
   border-radius: 10px;
