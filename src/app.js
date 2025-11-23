@@ -76,8 +76,9 @@ app.use((req, res, next) => {
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const opportunitiesRouter = require('./routes/opportunities');
+const statisticsRouter = require('./routes/statistics');
 
-app.use('/', csrfProtection, indexRouter, usersRouter, opportunitiesRouter);
+app.use('/', csrfProtection, indexRouter, usersRouter, opportunitiesRouter, statisticsRouter);
 
 // 404 handler
 app.use((req, res) => {
