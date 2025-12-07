@@ -9,8 +9,9 @@ const Opportunity = require('../models/Opportunity');
 const User = require('../models/User');
 
 /**
- * GET /
- * Display the home page
+ * Controller: Index
+ * Purpose: Display the home page to the user
+ * Output: Renders home EJS
  */
 exports.getHome = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [IndexController] Retrieving home page...`);
@@ -31,8 +32,9 @@ exports.getHome = async (req, res, next) => {
 };
 
 /**
- * GET /dashboard
- * Display the user dashboard
+ * Controller: Index
+ * Purpose: Display the dashboard to the user
+ * Output: Renders /dashboard EJS or redirects to home if an error occurs
  */
 exports.getDashboard = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [IndexController] Retrieving dashboard...`);
@@ -87,8 +89,9 @@ exports.getDashboard = async (req, res, next) => {
 };
 
 /**
- * GET /profile
- * Display the user profile
+ * Controller: Index
+ * Purpose: Display the user's profile to the user
+ * Output: Renders /profile EJS or redirects to home if an error occurs
  */
 exports.getProfile = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [IndexController] Retrieving profile...`);
