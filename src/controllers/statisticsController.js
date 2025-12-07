@@ -8,8 +8,9 @@
 const Statistics = require('../models/Statistics');
 
 /**
- * GET /statistics
- * Display various statistics on volunteer work from the US Census API
+ * Controller: Statistics
+ * Purpose: Display various statistics on volunteer work from the US Census API to the user
+ * Output: Renders /statistics EJS
  */
 exports.getStatistics = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [StatisticsController] Fetching statistics...`);
