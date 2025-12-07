@@ -10,13 +10,13 @@
 
 // Import models
 const User = require('../models/User');
-const Opportunity = require('../models/Opportunity');
 // Import bcrypt for password hashing
 const bcrypt = require('bcrypt');
 
 /**
- * GET /register
- * Display registration form
+ * Controller: user
+ * Purpose: Display a register form to the user
+ * Output: Renders /register EJS
  */
 exports.getRegister = (req, res) => {
   console.log(`[${new Date().toISOString()}] [UserController] Retrieving register form...`);
@@ -32,8 +32,14 @@ exports.getRegister = (req, res) => {
 };
 
 /**
- * POST /register
- * Process registration form
+ * Controller: User
+ * Purpose: Process a request to register a user
+ * Input:
+ *   req.body.firstname (string)
+ *   req.body.lastname (string)
+ *   req.body.email (string)
+ *   req.body.password (string)
+ * Output: Redirects to home or refreshes /register if an error occurs
  */
 exports.postRegister = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [UserController] Registering new user...`);
@@ -78,8 +84,9 @@ exports.postRegister = async (req, res, next) => {
 };
 
 /**
- * GET /login
- * Display login form
+ * Controller: User
+ * Purpose: Display a login form to the user
+ * Output: Renders /login EJS
  */
 exports.getLogin = (req, res) => {
   console.log(`[${new Date().toISOString()}] [UserController] Retrieving login form...`);
@@ -95,8 +102,12 @@ exports.getLogin = (req, res) => {
 };
 
 /**
- * POST /login
- * Process login form
+ * Controller: User
+ * Purpose: Process a request to login to an account
+ * Input:
+ *   req.body.email (string)
+ *   req.body.password (string)
+ * Output: Redirects to home or refreshes /login if an error occurs
  */
 exports.postLogin = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [UserController] Logging in user...`);
@@ -142,9 +153,11 @@ exports.postLogin = async (req, res, next) => {
   }
 };
 
+
 /**
- * GET /logout
- * Logout user
+ * Controller: User
+ * Purpose: Process a request to log out a user
+ * Output: Redirects to /login
  */
 exports.getLogout = (req, res) => {
   console.log(`[${new Date().toISOString()}] [UserController] Logging out user...`);
@@ -164,8 +177,9 @@ exports.getLogout = (req, res) => {
 };
 
 /**
- * GET /changepassword
- * Display change password form
+ * Controller: User
+ * Purpose: Display a change password form to the user
+ * Output: Renders /changepassword EJS
  */
 exports.getChangePassword = (req, res) => {
   console.log(`[${new Date().toISOString()}] [UserController] Retrieving change password form...`);
@@ -181,8 +195,12 @@ exports.getChangePassword = (req, res) => {
 };
 
 /**
- * POST /changepassword
- * Change user password
+ * Controller: User
+ * Purpose: Process a request to change a password
+ * Input:
+ *   req.body.password (string)
+ *   req.body.newpassword (string)
+ * Output: Redirects to home or refreshes /changepassword if an error occurs
  */
 exports.postChangePassword = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [UserController] Changing password...`);
