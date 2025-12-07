@@ -1,55 +1,54 @@
 /**
  * Index Controller
- *
- * Controllers handle the business logic for routes.
- * They process requests, interact with models, and send responses.
- *
- * Best practices:
- * - Keep controllers focused on request/response handling
- * - Move complex business logic to separate service files
- * - Use models to interact with the database
- * - Handle errors appropriately
+ * 
+ * Handles routing and requests for the main site pages (home, dashboard, profile)
  */
 
-// Import models if needed
-// const SomeModel = require('../models/SomeModel');
+// Import models
 const Opportunity = require('../models/Opportunity');
 const User = require('../models/User');
 
 /**
- * GET /
- * Display the home page
+ * Controller: Index
+ * Purpose: Display the home page to the user
+ * Output: Renders home EJS
  */
 exports.getHome = async (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] [IndexController] Retrieving home page...`);
+  
   try {
-    // Fetch any data needed for the home page
-    // const data = await SomeModel.findAll();
-
     res.render('index', {
       title: 'Home',
-      // data: data,
       csrfToken: req.csrfToken(),
       opportunities: Opportunity.getAll(),
       session: req.session.user,
     });
+
+    console.log(`[${new Date().toISOString()}] [IndexController] Successfully retrieved home page`);
   } catch (error) {
+    console.error(`[${new Date().toISOString()}] [IndexController] Retrieval failed:`, error.message);
     next(error);
   }
 };
 
 /**
- * GET /dashboard
- * Display the user dashboard
+ * Controller: Index
+ * Purpose: Display the dashboard to the user
+ * Output: Renders /dashboard EJS or redirects to home if an error occurs
  */
 exports.getDashboard = async (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] [IndexController] Retrieving dashboard...`);
+
   try {
     if (!req.session.user) {
+      console.log(`[${new Date().toISOString()}] [IndexController] Not logged in, redirecting...`);
       res.redirect('/login');
       return;
     }
 
     const user = await User.findById(req.session.user.id);
     if (!user || !user.joined_events) {
+      console.log(`[${new Date().toISOString()}] [IndexController] Invalid user, redirecting...`);
       res.redirect('/');
       return;
     }
@@ -66,9 +65,11 @@ exports.getDashboard = async (req, res, next) => {
     });
 
     if (req.query.sortupcoming) {
+      console.log(`[${new Date().toISOString()}] [IndexController] Sorting upcoming entries...`);
       upcoming = Opportunity.getSorted(req.query.sortupcoming === 'true', upcoming);
     }
     if (req.query.sortexpired) {
+      console.log(`[${new Date().toISOString()}] [IndexController] Sorting expired entries...`);
       expired = Opportunity.getSorted(req.query.sortexpired === 'true', expired);
     }
 
@@ -79,19 +80,27 @@ exports.getDashboard = async (req, res, next) => {
       expired: expired,
       session: req.session.user,
     });
+
+    console.log(`[${new Date().toISOString()}] [IndexController] Successfully retrieved dashboard`);
   } catch (error) {
+    console.error(`[${new Date().toISOString()}] [IndexController] Retrieval failed:`, error.message);
     next(error);
   }
 };
 
 /**
- * GET /profile
- * Display the user profile
+ * Controller: Index
+ * Purpose: Display the user's profile to the user
+ * Output: Renders /profile EJS or redirects to home if an error occurs
  */
 exports.getProfile = async (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] [IndexController] Retrieving profile...`);
+
   try {
     if (!req.session.user) {
+      console.log(`[${new Date().toISOString()}] [IndexController] Not logged in, redirecting...`);
       res.redirect('/login');
+      return;
     }
 
     res.render('profile', {
@@ -99,7 +108,10 @@ exports.getProfile = async (req, res, next) => {
       csrfToken: req.csrfToken(),
       session: req.session.user,
     });
+    
+    console.log(`[${new Date().toISOString()}] [IndexController] Successfully retrieved profile`);
   } catch (error) {
+    console.error(`[${new Date().toISOString()}] [IndexController] Retrieval failed:`, error.message);
     next(error);
   }
 };

@@ -2,7 +2,13 @@
 
 This website aims to simplify the process of searching for local volunteer opportunities and signing up for them.
 
-Based on a teaching template for building secure web applications with Node.js, Express, EJS, and PostgreSQL via Supabase.
+Featuring:
+- Joinable and creatable volunteer opportunities
+- User accounts with authentication
+- Supabase integration with bcrypt hashing for security
+- Statistics for volunteer work in the US
+
+A user can create or log into an account, view opportunities, or view statistics. A logged in user can create, join, and leave opportunities, change their password, or log out. This app facilitates all of these features with Supabase integration and external API requests.
 
 ## As of Week 9:
 
@@ -51,20 +57,32 @@ No API keys are necessary for this API. Only the URL is required for a request.
 
 <img width="1365" height="570" alt="image" src="https://github.com/user-attachments/assets/06feddbe-61eb-4355-a5f7-e96bed13f57a" />
 
-## Features
+## As of week 14:
 
-- 🚀 **Node.js 20** + **Express 4** - Modern JavaScript backend
-- 🎨 **EJS** - Server-side templating
-- 🗄️ **PostgreSQL** - Reliable relational database
-- 🔒 **Security First** - Helmet, CSRF protection, secure sessions
-- 📝 **Clean Code** - ESLint, Prettier, best practices
-- 🎓 **Educational** - Well-documented, instructional code
+- Improved documentation
+- Added method comments and stronger error handling in controllers
+
+## Error handling
+
+This website expects to experience database and external API errors.
+All database and external API calls are wrapped in try-catch blocks to handle errors gracefully.
+Errors are either hidden from the user, shown in brief toasts to the user, or shown as a dedicated page to the user.
+
+## Frontend features
+
+## Backend features
+
+- **Node.js 20** + **Express 4** - Modern JavaScript backend
+- **EJS** - Server-side templating
+- **Supabase** - Reliable database API
+- **Security First** - Helmet, CSRF protection, secure sessions
+- **Clean Code** - ESLint, Prettier, best practices
 
 ## Quick Start
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/UWO-CS346-Fall-25/cs346f25-volunteer-sign-up-app
    cd cs346f25-volunteer-sign-up-app
    ```
 
@@ -106,6 +124,38 @@ No API keys are necessary for this API. Only the URL is required for a request.
 
 ## Project Structure
 
+This website uses MVC for clean and efficient design.
+(Model - View - Controller)
+
+Models handle database interaction and API requests, and manage data
+- Opportunity: Database management for handling and sorting opportunities
+- User: Database management for user accounts
+- Statistics: US Census API requests for fetching volunteer statistics
+- supabase: Preparing the Supabase integration client
+
+Views handle presenting data to the user through EJS templates and HTML/CSS
+- Index: home page displaying optionally filtered/sorted opportunities
+- Dashboard: user page displaying optionally sorted joined opportunities
+- Profile: user page showing account data
+- Error: fallback page for displaying errors
+- Statistics: page for showing fetched volunteer data
+(And other static pages)
+
+Controllers handle business logic for processing requests and responses
+- Index Controller: handles requests for home and logged in user pages
+- Opportunity Controller: handles requests for managing opportunities
+- Statistics Controller: handles requests for viewing volunteer statistics
+- User Controller: handles requests for managing accounts
+
+Requests are routed through controllers, in this pattern:
+- Client sends HTTP request
+- Server matches request to route
+- Server calls appropriate controller function
+- Controller calls appropriate model functions
+- Models reach out to Supabase or external API
+- Controller renders retrieved data to EJS templates via a view
+- Controller sends back HTML data from view
+
 ```
 ├── src/
 │   ├── server.js           # Server entry point
@@ -131,55 +181,6 @@ No API keys are necessary for this API. Only the URL is required for a request.
 ├── .prettierrc.json        # Prettier configuration
 └── package.json            # Dependencies and scripts
 ```
-
-## Available Scripts
-
-- `npm start` - Start production server
-- `npm run dev` - Start development server with auto-reload
-- `npm run lint` - Check code for linting errors
-- `npm run lint:fix` - Fix linting errors automatically
-- `npm run format` - Format code with Prettier
-
-## Security Features
-
-- **Helmet**: Sets security-related HTTP headers
-- **express-session**: Secure session management with httpOnly cookies
-- **csurf**: Cross-Site Request Forgery (CSRF) protection
-- **Parameterized SQL**: SQL injection prevention with prepared statements
-- **Environment Variables**: Sensitive data kept out of source code
-
-## Documentation
-
-Comprehensive documentation is available in the `docs/` folder:
-
-- [docs/README.md](docs/README.md) - Documentation overview
-- [docs/SETUP.md](docs/SETUP.md) - Detailed setup instructions
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture and design patterns
-
-## Technology Stack
-
-- **Runtime**: Node.js 20
-- **Framework**: Express 4
-- **Templating**: EJS
-- **Database**: PostgreSQL / Supabase
-- **Security**: Helmet, express-session, csurf
-- **Development**: ESLint, Prettier, Nodemon
-
-## Learning Resources
-
-- [Express.js Documentation](https://expressjs.com/)
-- [EJS Documentation](https://ejs.co/)
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-- [Supabase Documentation](https://supabase.com/docs/reference/javascript)
-- [Node.js Documentation](https://nodejs.org/docs/)
-- [OWASP Security Guide](https://owasp.org/)
-
-## Contributing
-
-This is based on a teaching template. Feel free to:
-- Report issues
-- Suggest improvements
-- Submit pull requests
 
 ## License
 
