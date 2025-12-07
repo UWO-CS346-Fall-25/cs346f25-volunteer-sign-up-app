@@ -9,8 +9,12 @@ const Opportunity = require('../models/Opportunity');
 const User = require('../models/User');
 
 /**
- * GET /filter
- * Display the home page with filtered opportunities
+ * Controller: Opportunity
+ * Purpose: Display the home page with filtered opportunities to the user
+ * Input:
+ *   req.query.zipcode (string?)
+ *   req.query.sort (string?)
+ * Output: Renders home EJS
  */
 exports.getFilteredHome = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [OpportunityController] Retrieving filtered home...`);
@@ -42,8 +46,9 @@ exports.getFilteredHome = async (req, res, next) => {
 }
 
 /**
- * GET /opportunity/create
- * Display create opportunity form
+ * Controller: Opportunity
+ * Purpose: Display an opportunity creation form to the user
+ * Output: Renders /opportunity/create EJS
  */
 exports.getOpportunityCreate = (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [OpportunityController] Retrieving creation page...`);
@@ -68,8 +73,14 @@ exports.getOpportunityCreate = (req, res, next) => {
 };
 
 /**
- * POST /opportunity/create
- * Create new opportunity
+ * Controller: Opportunity
+ * Purpose: Process a request to create an opportunity
+ * Input:
+ *   req.body.title (string)
+ *   req.body.description (string)
+ *   req.body.zipcode (string)
+ *   req.body.date (string)
+ * Output: Redirects to home or refreshes /opportunity/create if an error occurs
  */
 exports.postOpportunityCreate = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [OpportunityController] Processing creation request...`);
@@ -121,8 +132,11 @@ exports.postOpportunityCreate = async (req, res, next) => {
 }
 
 /**
- * GET /opportunity/join
- * Join an opportunity
+ * Controller: Opportunity
+ * Purpose: Process a request to join an opportunity
+ * Input:
+ *   req.query.id (string)
+ * Output: Redirects to home
  */
 exports.getOpportunityJoin = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [OpportunityController] Joining opportunity...`);
@@ -159,8 +173,11 @@ exports.getOpportunityJoin = async (req, res, next) => {
 };
 
 /**
- * GET /opportunity/leave
- * Leave an opportunity
+ * Controller: Opportunity
+ * Purpose: Process a request to leave an opportunity
+ * Input:
+ *   req.query.id (string)
+ * Output: Redirects to home
  */
 exports.getOpportunityLeave = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [OpportunityController] Leaving opportunity...`);
