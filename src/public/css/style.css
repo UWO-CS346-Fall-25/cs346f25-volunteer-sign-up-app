@@ -310,7 +310,7 @@ input {
   font-weight: bold;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=number], input[type=date] {
+input:not([type=submit]) {
   padding: 5px;
   margin: 5px;
   width: 40%;

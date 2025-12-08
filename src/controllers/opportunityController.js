@@ -92,9 +92,9 @@ exports.postOpportunityCreate = async (req, res, next) => {
       return;
     }
 
-    const { title, description, zipcode, date } = req.body;
-    const startDate = new Date(date).getTime()
-    const endDate = new Date(date).getTime();
+    const { title, description, zipcode, date, starttime, endtime } = req.body;
+    const startDate = new Date(`${date}T${starttime}`);
+    const endDate = new Date(`${date}T${endtime}`);
     
     // Create opportunity with data
     const toCreate = new Opportunity(
