@@ -220,7 +220,11 @@ function initInteractiveElements() {
 
   for (const button of deleteOpportunityButtons) {
     button.addEventListener('click', function (e) {
-      window.location.href = `/opportunity/delete?id=${button.id}`;
+      const confirmed = confirm('Are you sure you want to delete this opportunity?');
+      
+      if (confirmed) {
+        window.location.href = `/opportunity/delete?id=${button.id}`;
+      }
     });
   }
 }
