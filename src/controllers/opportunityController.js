@@ -92,6 +92,14 @@ exports.postOpportunityCreate = async (req, res, next) => {
       return;
     }
 
+    console.log(`[${new Date().toISOString()}] [OpportunityController] Retrieving user...`);
+    const user = await User.findById(req.session.user.id);
+    if (!user || !user.joined_events) {
+      console.log(`[${new Date().toISOString()}] [OpportunityController] Not logged in, redirecting...`);
+      res.redirect('/login');
+      return;
+    }
+
     const { title, description, zipcode, date, starttime, endtime } = req.body;
     const startDate = new Date(`${date}T${starttime}`);
     const endDate = new Date(`${date}T${endtime}`);
@@ -105,8 +113,7 @@ exports.postOpportunityCreate = async (req, res, next) => {
       endDate,
       [req.session.user.id],
       null,
-      zipcode,
-      false
+      zipcode
     );
 
     console.log(`[${new Date().toISOString()}] [OpportunityController] Creating opportunity...`);
@@ -122,8 +129,18 @@ exports.postOpportunityCreate = async (req, res, next) => {
       });
     }
 
+    console.log(`[${new Date().toISOString()}] [OpportunityController] Creation succeeded, joining opportunity...`);
+    try {
+      user.joined_events.push(opportunity.id);
+      await User.update(user.id, {
+        joined_events: user.joined_events
+      });
+    } catch {
+      console.error(`[${new Date().toISOString()}] [OpportunityController] Join failed:`, error.message);
+    }
+
     // Redirect to home
-    console.log(`[${new Date().toISOString()}] [OpportunityController] Creation succeeded, redirecting...`);
+    console.log(`[${new Date().toISOString()}] [OpportunityController] Creation finished, redirecting...`);
     res.redirect('/');
   } catch (error) {
     console.error(`[${new Date().toISOString()}] [OpportunityController] Creation failed:`, error.message);

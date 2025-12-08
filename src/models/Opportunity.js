@@ -19,10 +19,8 @@ class Opportunity {
    * @param {[string]} organizers The email addresses of this opportunity's organizers
    * @param {string} image The path to the image for this opportunity
    * @param {number} zipCode The zip code associated with this opportunity
-   * @param {boolean} isJoined Whether this opportunity has been joined
-   * TODO: Attach isJoined and instance methods to user sessions rather than global data
    */
-  constructor(id, title, description, startDate, endDate, organizers, image, zipCode, isJoined) {
+  constructor(id, title, description, startDate, endDate, organizers, image, zipCode) {
     // Default values to ensure all properties are present in the class
     this.id = id ?? null;
     this.title = title ?? '[Title]';
@@ -32,7 +30,6 @@ class Opportunity {
     this.organizers = organizers ?? ['[Organizer]'];
     this.image = image ?? '/img/zybooks_cat.jpg';
     this.zipCode = zipCode ?? 12345;
-    this.isJoined = isJoined ?? false;
     this.dateStr = `${this.startDate.getMonth() + 1}/${this.startDate.getDate()}/${this.startDate.getFullYear()}`;
     this.startTimeStr = `${this.startDate.getHours()}:${String(this.startDate.getMinutes()).padStart(2, '0')}`;
     this.endTimeStr = `${this.endDate.getHours()}:${String(this.endDate.getMinutes()).padStart(2, '0')}`;
@@ -87,7 +84,6 @@ async function fetchOpportunities() {
       organizers,
       null,
       opportunity.zip_code,
-      false,
     ));
   }
 
@@ -184,7 +180,6 @@ Opportunity.update = async function(toUpdate, opportunityData) {
     organizers = opportunity.organizers,
     image = null,
     zipCode = opportunity.zip_code,
-    isJoined = false,
   );
 }
 
@@ -231,14 +226,6 @@ Opportunity.getFiltered = function(zipCode, toFilter) {
   return (toFilter ?? opportunities).filter(function(opportunity) {
     return opportunity.zipCode == zipCode;
   });
-}
-
-/**
- * Leaves an opportunity by marking it as not joined
- * @param {Opportunity} toLeave The opportunity to leave
- */
-Opportunity.leave = function(toLeave) {
-  toLeave.isJoined = false;
 }
 
 module.exports = Opportunity;
