@@ -16,11 +16,12 @@ class Opportunity {
    * @param {string} description The description of this opportunity
    * @param {number} startDate The start date of this opportunity
    * @param {number} endDate The end date of this opportunity
-   * @param {[string]} organizers The email addresses of this opportunity's organizers
+   * @param {[string]} organizers The names of this opportunity's organizers
    * @param {string} image The path to the image for this opportunity
    * @param {number} zipCode The zip code associated with this opportunity
+   * @param {string} owner The ID of this opportunity's creator
    */
-  constructor(id, title, description, startDate, endDate, organizers, image, zipCode) {
+  constructor(id, title, description, startDate, endDate, organizers, image, zipCode, owner) {
     // Default values to ensure all properties are present in the class
     this.id = id ?? null;
     this.title = title ?? '[Title]';
@@ -33,6 +34,7 @@ class Opportunity {
     this.dateStr = `${this.startDate.getMonth() + 1}/${this.startDate.getDate()}/${this.startDate.getFullYear()}`;
     this.startTimeStr = `${this.startDate.getHours()}:${String(this.startDate.getMinutes()).padStart(2, '0')}`;
     this.endTimeStr = `${this.endDate.getHours()}:${String(this.endDate.getMinutes()).padStart(2, '0')}`;
+    this.owner = owner ?? '[Owner]';
   }
 
   /**
@@ -84,6 +86,7 @@ async function fetchOpportunities() {
       organizers,
       null,
       opportunity.zip_code,
+      opportunity.created_by
     ));
   }
 
@@ -180,15 +183,20 @@ Opportunity.update = async function(toUpdate, opportunityData) {
     organizers = opportunity.organizers,
     image = null,
     zipCode = opportunity.zip_code,
+    owner = opportunity.created_by,
   );
 }
 
 /**
  * Returns all opportunities from the database
+ * @param {string?} fromId Optional user id to mark the opportunity as owned or unowned by that user
  * @returns All opportunities from the database
  */
-Opportunity.getAll = function() {
-  return opportunities;
+Opportunity.getAll = function(fromId) {
+  return opportunities.map(function(opportunity) {
+    opportunity.owned = opportunity.owner == fromId;
+    return opportunity;
+  });
 }
 
 /**

@@ -25,5 +25,6 @@ router.get('/opportunity/create', opportunityController.getOpportunityCreate);
 router.post('/opportunity/create', opportunityController.postOpportunityCreate);
 router.get('/opportunity/join', opportunityController.getOpportunityJoin);
 router.get('/opportunity/leave', opportunityController.getOpportunityLeave);
+router.get('/opportunity/delete', opportunityController.getOpportunityDelete);
 
 module.exports = router;

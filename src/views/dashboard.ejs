@@ -60,7 +60,11 @@
               </tr>
               <tr></tr>
               <tr>
-                <td class="td-leave" id="<%= opportunity.id %>"><button class="btn">Leave Opportunity</button></td>
+                <% if (!opportunity.owned) { %>
+                  <td class="td-leave" id="<%= opportunity.id %>"><button class="btn">Leave Opportunity</button></td>
+                <% } else { %>
+                  <td class="td-delete" id="<%= opportunity.id %>"><button class="btn">Delete Opportunity</button></td>
+                <% } %>
                 <td colspan="3" class="td-organizers"><%= opportunity.organizers.join(', ') %></td>
                 <td class="td-zip">Zip Code: <%= opportunity.zipCode %></td>
               </tr>
@@ -96,7 +100,11 @@
               </tr>
               <tr></tr>
               <tr>
-                <td class="td-leave" id="<%= opportunity.id %>"><button class="btn">Leave Opportunity</button></td>
+                <% if (!opportunity.owned) { %>
+                  <td class="td-leave" id="<%= opportunity.id %>"><button class="btn">Leave Opportunity</button></td>
+                <% } else { %>
+                  <td class="td-delete" id="<%= opportunity.id %>"><button class="btn">Delete Opportunity</button></td>
+                <% } %>
                 <td colspan="3" class="td-organizers"><%= opportunity.organizers.join(', ') %></td>
                 <td class="td-zip">Zip Code: <%= opportunity.zipCode %></td>
               </tr>

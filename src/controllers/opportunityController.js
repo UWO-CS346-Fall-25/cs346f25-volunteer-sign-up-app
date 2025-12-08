@@ -194,7 +194,7 @@ exports.getOpportunityJoin = async (req, res, next) => {
  * Purpose: Process a request to leave an opportunity
  * Input:
  *   req.query.id (string)
- * Output: Redirects to home
+ * Output: Redirects to dashboard
  */
 exports.getOpportunityLeave = async (req, res, next) => {
   console.log(`[${new Date().toISOString()}] [OpportunityController] Leaving opportunity...`);
@@ -229,6 +229,48 @@ exports.getOpportunityLeave = async (req, res, next) => {
     res.redirect('/dashboard');
   } catch (error) {
     console.error(`[${new Date().toISOString()}] [OpportunityController] Leave failed:`, error.message);
+    next(error);
+  }
+};
+
+/**
+ * Controller: Opportunity
+ * Purpose: Process a request to delete an opportunity
+ * Input:
+ *   req.query.id (string)
+ * Output: Redirects to dashboard
+ */
+exports.getOpportunityDelete = async (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] [OpportunityController] Deleting opportunity...`);
+  
+  try {
+    if (!req.session.user) {
+      console.log(`[${new Date().toISOString()}] [OpportunityController] Not logged in, redirecting...`);
+      res.redirect('/login');
+      return;
+    }
+
+    if (req.query.id) {
+      console.log(`[${new Date().toISOString()}] [OpportunityController] Retrieving user...`);
+      const user = await User.findById(req.session.user.id);
+      console.log(`[${new Date().toISOString()}] [OpportunityController] Retrieving opportunity...`);
+      const opportunity = Opportunity.getAll().filter(function(item) {
+        return item.id == req.query.id;
+      });
+
+      if (user && opportunity && user.id === opportunity.owner) {
+        console.log(`[${new Date().toISOString()}] [OpportunityController] Data validated, processing deletion...`);
+        await Opportunity.remove(opportunity);
+      }
+    } else {
+      console.log(`[${new Date().toISOString()}] [OpportunityController] Invalid data, skipping request...`);
+    }
+
+    // Redirect to dashboard
+    console.log(`[${new Date().toISOString()}] [OpportunityController] Redirecting...`);
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.error(`[${new Date().toISOString()}] [OpportunityController] Deletion failed:`, error.message);
     next(error);
   }
 };

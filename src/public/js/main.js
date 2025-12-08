@@ -214,6 +214,15 @@ function initInteractiveElements() {
       window.location.href = `/opportunity/leave?id=${button.id}`;
     });
   }
+
+  // Add delete opportunity functionality
+  const deleteOpportunityButtons = document.getElementsByClassName("td-delete");
+
+  for (const button of deleteOpportunityButtons) {
+    button.addEventListener('click', function (e) {
+      window.location.href = `/opportunity/delete?id=${button.id}`;
+    });
+  }
 }
 
 /**

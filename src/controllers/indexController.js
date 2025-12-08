@@ -53,7 +53,7 @@ exports.getDashboard = async (req, res, next) => {
       return;
     }
 
-    const opportunities = Opportunity.getAll().filter(function(opportunity) {
+    let opportunities = Opportunity.getAll(user.id).filter(function(opportunity) {
       return user.joined_events.includes(opportunity.id);
     });
     
