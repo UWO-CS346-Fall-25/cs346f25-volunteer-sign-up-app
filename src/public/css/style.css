@@ -201,23 +201,6 @@ input {
   text-shadow: none;
 }
 
-/* Dashboard page */
-#notify {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-#notify-check {
-  width: 20px;
-  height: 20px;
-}
-
-#notify label {
-  color: var(--dark-color);
-  text-shadow: none;
-}
-
 /* Profile Page */
 .profile-data {
   padding: 5vw;
