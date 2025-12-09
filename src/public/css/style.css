@@ -217,6 +217,8 @@ input {
 .profile-data td {
   color: var(--dark-color);
   text-shadow: none;
+  text-align: center;
+  font-size: 1rem;
 }
 
 .profile-data img {
@@ -226,11 +228,6 @@ input {
 
 .profile-data button {
   width: 100%;
-}
-
-.profile-data td {
-  text-align: center;
-  font-size: 0.75rem;
 }
 
 #log-out {
