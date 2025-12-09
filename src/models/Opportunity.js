@@ -90,6 +90,14 @@ async function fetchOpportunities() {
     ));
   }
 
+  results.sort(function(a, b) {
+    if (a.startDate === b.startDate) {
+      return 0;
+    }
+
+    return a.startDate > b.startDate ? -1 : 1;
+  });
+
   opportunities = results;
 }
 
