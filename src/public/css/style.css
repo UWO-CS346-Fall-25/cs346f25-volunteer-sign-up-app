@@ -176,6 +176,10 @@ input {
   font-size: 0.8rem;
 }
 
+.td-image {
+  max-width: 250px;
+}
+
 /* Create bars */
 .create-bar {
   text-align: center;
@@ -201,23 +205,6 @@ input {
   text-shadow: none;
 }
 
-/* Dashboard page */
-#notify {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-#notify-check {
-  width: 20px;
-  height: 20px;
-}
-
-#notify label {
-  color: var(--dark-color);
-  text-shadow: none;
-}
-
 /* Profile Page */
 .profile-data {
   padding: 5vw;
@@ -234,6 +221,8 @@ input {
 .profile-data td {
   color: var(--dark-color);
   text-shadow: none;
+  text-align: center;
+  font-size: 1rem;
 }
 
 .profile-data img {
@@ -243,11 +232,6 @@ input {
 
 .profile-data button {
   width: 100%;
-}
-
-.profile-data td {
-  text-align: center;
-  font-size: 0.75rem;
 }
 
 #log-out {
@@ -310,7 +294,7 @@ input {
   font-weight: bold;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=number], input[type=date] {
+input:not([type=submit]) {
   padding: 5px;
   margin: 5px;
   width: 40%;

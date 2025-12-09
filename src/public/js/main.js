@@ -1,10 +1,10 @@
 /**
  * Main JavaScript File
  *
- * This file contains client-side JavaScript for your application.
- * Use vanilla JavaScript (no frameworks) for DOM manipulation and interactions.
+ * This file contains client-side JavaScript for this application.
+ * Uses vanilla JavaScript for DOM manipulation and interactions.
  *
- * Common tasks:
+ * Tasks:
  * - Form validation
  * - Interactive UI elements
  * - AJAX requests
@@ -15,10 +15,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log('Application initialized');
 
-  // Example: Form validation
+  // Form validation
   initFormValidation();
 
-  // Example: Interactive elements
+  // Interactive elements
   initInteractiveElements();
 });
 
@@ -123,7 +123,7 @@ function clearError(field) {
  * Initialize interactive elements
  */
 function initInteractiveElements() {
-  // Example: Add smooth scrolling to anchor links
+  // Add smooth scrolling to anchor links
   const anchorLinks = document.querySelectorAll('a[href^="#"]');
 
   anchorLinks.forEach((link) => {
@@ -142,32 +142,62 @@ function initInteractiveElements() {
     });
   });
 
-  // Add functionality for sort buttons
-  let sortMain = false;
-  let sortUpcoming = false;
-  let sortExpired = false;
+  // Get current query params
+  const params = new URLSearchParams(window.location.search);
+
+  // Add functionality for sort and filter buttons
+  let sortMain = params.get('sort') === 'true';
+  let sortUpcoming = params.get('sortupcoming') === 'true';
+  let sortExpired = params.get('sortexpired') === 'true';
+  let filterMain = params.get('zipcode') ?? '';
 
   const sortMainBtn = document.getElementById("button-sort");
   const sortUpcomingBtn = document.getElementById("sort-upcoming");
   const sortExpiredBtn = document.getElementById("sort-expired");
+  const filterMainBtn = document.getElementById("button-filter");
+  const filterMainZip = document.getElementById("input-zip");
+
+  if (filterMainZip) {
+    filterMainZip.value = filterMain;
+  }
 
   sortMainBtn?.addEventListener('click', function (e) {
     sortMain ^= true;
-    const query = sortMain ? '?sort=true' : '';
-    window.location.href = `/filter${query}`;
+    let query = [];
+    if (sortMain) { query.push('sort=true'); }
+    if (filterMain.trim().length > 0) { query.push(`zipcode=${filterMain}`); }
+
+    window.location.href = `/filter?${query.join('&')}`;
   });
 
   sortUpcomingBtn?.addEventListener('click', function (e) {
     sortUpcoming ^= true;
-    const query = sortUpcoming ? '?sortupcoming=true' : '';
-    window.location.href = `/dashboard${query}`;
+    let query = []
+    if (sortUpcoming) { query.push('sortupcoming=true'); }
+    if (sortExpired) { query.push('sortexpired=true'); }
+
+    window.location.href = `/dashboard?${query.join('&')}`;
   });
 
   sortExpiredBtn?.addEventListener('click', function (e) {
     sortExpired ^= true;
-    const query = sortExpired ? '?sortexpired=true' : '';
-    window.location.href = `/dashboard${query}`;
+    let query = []
+    if (sortUpcoming) { query.push('sortupcoming=true'); }
+    if (sortExpired) { query.push('sortexpired=true'); }
+
+    window.location.href = `/dashboard?${query.join('&')}`;
   });
+
+  if (filterMainZip) {
+    filterMainBtn?.addEventListener('click', function (e) {
+      filterMain = filterMainZip.value;
+      let query = [];
+      if (sortMain) { query.push('sort=true'); }
+      if (filterMain.trim().length > 0) { query.push(`zipcode=${filterMain}`); }
+
+      window.location.href = `/filter?${query.join('&')}`;
+    });
+  }
 
   // Add log out functionality
   const logoutButton = document.getElementById("log-out");
@@ -212,6 +242,19 @@ function initInteractiveElements() {
   for (const button of leaveOpportunityButtons) {
     button.addEventListener('click', function (e) {
       window.location.href = `/opportunity/leave?id=${button.id}`;
+    });
+  }
+
+  // Add delete opportunity functionality
+  const deleteOpportunityButtons = document.getElementsByClassName("td-delete");
+
+  for (const button of deleteOpportunityButtons) {
+    button.addEventListener('click', function (e) {
+      const confirmed = confirm('Are you sure you want to delete this opportunity?');
+      
+      if (confirmed) {
+        window.location.href = `/opportunity/delete?id=${button.id}`;
+      }
     });
   }
 }
@@ -280,6 +323,3 @@ function showNotification(message, type = 'info') {
     notification.remove();
   }, 4000);
 }
-
-// Export functions if using modules
-// export { validateForm, makeRequest, showNotification };

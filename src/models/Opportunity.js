@@ -16,13 +16,12 @@ class Opportunity {
    * @param {string} description The description of this opportunity
    * @param {number} startDate The start date of this opportunity
    * @param {number} endDate The end date of this opportunity
-   * @param {[string]} organizers The email addresses of this opportunity's organizers
+   * @param {[string]} organizers The names of this opportunity's organizers
    * @param {string} image The path to the image for this opportunity
    * @param {number} zipCode The zip code associated with this opportunity
-   * @param {boolean} isJoined Whether this opportunity has been joined
-   * TODO: Attach isJoined and instance methods to user sessions rather than global data
+   * @param {string} owner The ID of this opportunity's creator
    */
-  constructor(id, title, description, startDate, endDate, organizers, image, zipCode, isJoined) {
+  constructor(id, title, description, startDate, endDate, organizers, image, zipCode, owner) {
     // Default values to ensure all properties are present in the class
     this.id = id ?? null;
     this.title = title ?? '[Title]';
@@ -32,10 +31,10 @@ class Opportunity {
     this.organizers = organizers ?? ['[Organizer]'];
     this.image = image ?? '/img/zybooks_cat.jpg';
     this.zipCode = zipCode ?? 12345;
-    this.isJoined = isJoined ?? false;
     this.dateStr = `${this.startDate.getMonth() + 1}/${this.startDate.getDate()}/${this.startDate.getFullYear()}`;
     this.startTimeStr = `${this.startDate.getHours()}:${String(this.startDate.getMinutes()).padStart(2, '0')}`;
     this.endTimeStr = `${this.endDate.getHours()}:${String(this.endDate.getMinutes()).padStart(2, '0')}`;
+    this.owner = owner ?? '[Owner]';
   }
 
   /**
@@ -85,11 +84,19 @@ async function fetchOpportunities() {
       Date.parse(opportunity.event_begin),
       Date.parse(opportunity.event_end),
       organizers,
-      null,
+      opportunity.image,
       opportunity.zip_code,
-      false,
+      opportunity.created_by
     ));
   }
+
+  results.sort(function(a, b) {
+    if (a.startDate === b.startDate) {
+      return 0;
+    }
+
+    return a.startDate > b.startDate ? -1 : 1;
+  });
 
   opportunities = results;
 }
@@ -130,6 +137,7 @@ Opportunity.add = async function(toAdd) {
       zip_code: toAdd.zipCode,
       created_by: createdBy,
       organizers: toAdd.organizers,
+      image: toAdd.image,
     })
     .select('*');
 
@@ -182,18 +190,22 @@ Opportunity.update = async function(toUpdate, opportunityData) {
     startDate = Date.parse(opportunity.event_begin),
     endDate = Date.parse(opportunity.event_end),
     organizers = opportunity.organizers,
-    image = null,
+    image = opportunity.image,
     zipCode = opportunity.zip_code,
-    isJoined = false,
+    owner = opportunity.created_by,
   );
 }
 
 /**
  * Returns all opportunities from the database
+ * @param {string?} fromId Optional user id to mark the opportunity as owned or unowned by that user
  * @returns All opportunities from the database
  */
-Opportunity.getAll = function() {
-  return opportunities;
+Opportunity.getAll = function(fromId) {
+  return opportunities.map(function(opportunity) {
+    opportunity.owned = opportunity.owner == fromId;
+    return opportunity;
+  });
 }
 
 /**
@@ -231,14 +243,6 @@ Opportunity.getFiltered = function(zipCode, toFilter) {
   return (toFilter ?? opportunities).filter(function(opportunity) {
     return opportunity.zipCode == zipCode;
   });
-}
-
-/**
- * Leaves an opportunity by marking it as not joined
- * @param {Opportunity} toLeave The opportunity to leave
- */
-Opportunity.leave = function(toLeave) {
-  toLeave.isJoined = false;
 }
 
 module.exports = Opportunity;
