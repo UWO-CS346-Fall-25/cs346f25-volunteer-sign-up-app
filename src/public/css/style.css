@@ -176,6 +176,10 @@ input {
   font-size: 0.8rem;
 }
 
+.td-image {
+  max-width: 250px;
+}
+
 /* Create bars */
 .create-bar {
   text-align: center;

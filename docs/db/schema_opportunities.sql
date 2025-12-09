@@ -7,6 +7,7 @@ create table public.opportunities (
   zip_code integer not null,
   title text not null,
   description text not null,
+  image text,
   created_by uuid,
   organizers uuid[] not null,
   constraint opportunities_pkey primary key (id),

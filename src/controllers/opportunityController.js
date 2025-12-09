@@ -100,7 +100,7 @@ exports.postOpportunityCreate = async (req, res, next) => {
       return;
     }
 
-    const { title, description, zipcode, date, starttime, endtime } = req.body;
+    const { title, description, image, date, starttime, endtime, zipcode } = req.body;
     const startDate = new Date(`${date}T${starttime}`);
     const endDate = new Date(`${date}T${endtime}`);
     
@@ -112,8 +112,9 @@ exports.postOpportunityCreate = async (req, res, next) => {
       startDate,
       endDate,
       [req.session.user.id],
-      null,
-      zipcode
+      image.trim().length > 0 ? image.trim() : null,
+      zipcode,
+      req.session.user.id,
     );
 
     console.log(`[${new Date().toISOString()}] [OpportunityController] Creating opportunity...`);

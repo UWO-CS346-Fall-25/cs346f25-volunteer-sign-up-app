@@ -84,7 +84,7 @@ async function fetchOpportunities() {
       Date.parse(opportunity.event_begin),
       Date.parse(opportunity.event_end),
       organizers,
-      null,
+      opportunity.image,
       opportunity.zip_code,
       opportunity.created_by
     ));
@@ -129,6 +129,7 @@ Opportunity.add = async function(toAdd) {
       zip_code: toAdd.zipCode,
       created_by: createdBy,
       organizers: toAdd.organizers,
+      image: toAdd.image,
     })
     .select('*');
 
@@ -181,7 +182,7 @@ Opportunity.update = async function(toUpdate, opportunityData) {
     startDate = Date.parse(opportunity.event_begin),
     endDate = Date.parse(opportunity.event_end),
     organizers = opportunity.organizers,
-    image = null,
+    image = opportunity.image,
     zipCode = opportunity.zip_code,
     owner = opportunity.created_by,
   );
