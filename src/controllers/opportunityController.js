@@ -256,7 +256,7 @@ exports.getOpportunityDelete = async (req, res, next) => {
       console.log(`[${new Date().toISOString()}] [OpportunityController] Retrieving opportunity...`);
       const opportunity = Opportunity.getAll().filter(function(item) {
         return item.id == req.query.id;
-      });
+      })[0];
 
       if (user && opportunity && user.id === opportunity.owner) {
         console.log(`[${new Date().toISOString()}] [OpportunityController] Data validated, processing deletion...`);
